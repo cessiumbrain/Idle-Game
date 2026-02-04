@@ -1,0 +1,45 @@
+
+
+.App {
+
+  background-image: url('../public/space-background.png');
+  margin: 0px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .ship-animation {
+    .ship {
+        animation: hover 2s steps(4) infinite;
+        height: 100px;
+    }
+
+  }
+  
+
+  .display{
+    border: 1px solid white;
+    width: 100%
+  }
+  button {
+    width: 50px;
+  }
+}
+
+
+@keyframes hover {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+
+
+
+
+
