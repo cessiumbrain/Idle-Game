@@ -11,28 +11,17 @@ function App() {
 
   const frames = [ship01, ship02, ship03]
 
-  useEffect(()=>{
-    if(isRunning){
-      console.log('cycle frames')
-      const interval = setInterval(()=>{
-        console.log('interval')
-      const randomNum = Math.floor(Math.random()*3)
-      console.log(randomNum)
-      setShipFrameNumber(randomNum)
-    }, 4000)
-    } else {
-      console.log('revert to first frame')
-      setShipFrameNumber(0)
-    }
-    
-  }, [isRunning])
+  function cycleTimer(){
+    console.log('cycle timer')
+  }
+  
 
 
   
   return (
-    <div className="App">
+    <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
       <div className={`ship-animation`} >
-        <img className={`ship ${isRunning ? 'flying' : 'stationary'}`} src={frames[shipFrameNumber]}/>
+        <img className={`ship ${isRunning ? 'flying' : 'stationary'}`} src={frames[shipFrameNumber] || ship01}/>
               </div>
       <div className="display">
         <div className="total-time"></div>
