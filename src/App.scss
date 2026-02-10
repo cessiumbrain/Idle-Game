@@ -78,8 +78,14 @@ body {
   .display{
     position: relative;
     z-index: 1;
+    width: 75%;
+    color: white;
     border: 1px solid white;
-    width: 100%
+
+    .resources {
+      border: 1px solid white;
+    }
+
   }
   button {
     position: relative;
