@@ -7,9 +7,12 @@ export const baseRates = {
     gold: 0.05
 }
 
+export const secondsPerCredit = 10
+
 //
 export function calculateResources(playerData, baseRates){
     console.log('calculate resources')
+
     const newResourceUnits = {
         
     }
@@ -18,6 +21,9 @@ export function calculateResources(playerData, baseRates){
         const currentUnits = playerData.resourceUnits[resource]
         const baseRate = baseRates[resource]
         const currentLevel = playerData.miningLevels[resource]
+        let newUnits = currentUnits + baseRate * currentLevel * (Math.log(currentLevel +1))
+        newResourceUnits[resource] = newUnits
     }
+    return newResourceUnits
     
 }
