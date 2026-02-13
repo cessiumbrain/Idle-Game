@@ -1,10 +1,10 @@
 //resource gathering rates per second
 
 export const baseRates = {
-    iron: 1,
-    bronze: 0.1,
+    iron: .1,
+    bronze: 0.03,
     silver: 0.01,
-    gold: 0.05
+    gold: 0.005
 }
 
 export const secondsPerCredit = 10
