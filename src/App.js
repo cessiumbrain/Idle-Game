@@ -11,6 +11,8 @@ function App() {
   const [messages, setMessages] = useState([])
   const [playerData, setPlayerData] = useState({
     totalTime: 0,
+    shipName: "",
+    shipActivity: "",
     resourceUnits: {
       iron: 0,
       bronze: 0,
@@ -36,6 +38,10 @@ function App() {
 
   useEffect(() => {
   const savedData = localStorage.getItem('playerData')
+
+  //if there is saved data, load it and display a message confirming the load 
+  // if not, pop up a modal with initial instructions and prompts
+
   // if (savedData) {
   //   setPlayerData(JSON.parse(savedData))
   //   setMessages(prevMessages=>{
@@ -148,13 +154,22 @@ function App() {
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
       <i class="info-icon fa-solid fa-info"></i>
       <i class="instructions-icon fa-solid fa-question" onClick={()=>setShowModal(true)}></i>
-      {showModal && <Modal setShowModal={setShowModal}></Modal>}
+      {showModal && <Modal setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowModal}></Modal>}
       <div class="credits-display">Credits: {playerData.currentCredits}</div>
       <div className={`ship-animation`} >
         <img className={`ship ${isRunning ? 'flying' : 'stationary'}`} src={frames[shipFrameNumber] || ship01}/>
       </div>
       <div className="display">
-        <div className="total-time">
+        <div className="row-one">
+          <div className="ship-name-div">
+            <span>Ship Name {playerData.shipName}</span>  
+          </div>
+          <div className="ship-activity-div">
+            <span>Ship Activity: {playerData.shipActivity}</span>
+          </div>
+          
+        </div>
+        <div className="row-two">
           <span>Total Time: </span>
           {Math.floor(playerData.totalTime / 3600)}h {Math.floor((playerData.totalTime % 3600) / 60)}m {playerData.totalTime % 60}s
         </div>
@@ -203,11 +218,35 @@ function Messages(props){
 }
 
 function Modal(props){
+  const [shipName, setShipName] = useState(props.playerData.shipName || '')
+  const [shipActivity, setShipActivity] = useState(props.playerData.shipActivity || '')
+
+  function handleCloseModal(){
+    console.log('close modal')
+    props.setShowModal(false)
+    props.setPlayerData(prevData=>({
+      ...prevData,
+      shipName: shipName,
+      shipActivity: shipActivity
+    }))
+  }
+
   return(
     <div className="info-modal">
-
       Idle Game is designed to reward you for doing things that aren't as inherently rewarding as they ought to be.  When doing something good for you, start the timer.  Every {(secondsPerCredit /60).toFixed(2)} minutes, you'll earn one credit to upgrade the rate at which your ship gathers a certain resource.
-      <button onClick={()=>{props.setShowModal(false)}}>close</button>
+      <div className="modal-inputs">
+        <label>Ship Name:</label>
+        <input className="ship-name" onChange={(e)=>{setShipName(e.target.value)}}placeholder={props.playerData.shipName || 'enter ship name'}></input>
+      </div>
+      <div className="modal-inputs">
+        <label>Activity</label>
+        <input onChange={(e)=>{
+          console.log('change shipname input') 
+          setShipActivity(e.target.value)}} className="ship-activity" placeholder={props.playerData.shipActivity || 'enter activity'}></input>
+      </div>
+        
+      
+      <button onClick={handleCloseModal}> save & close</button>
       </div>
   )
 }

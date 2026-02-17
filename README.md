@@ -1,11 +1,23 @@
 to do:
-[ ] - add info i icon for modal to give fleet info
-[ ] - add instructions modal
+[x] - finish adjusting state in modal
+[ ] - break out component files
+[ ] - add defense upgrade
+[ ] - add random events
+[ ] - add initial modal logic
+[ ] - refactor for multiple ships
+    [ ] - class ships A,B,C 
+        -   A- micro maintenence
+        -  B - deep work skill building
+        - C - emotional friction, avoidance
+    [ ] - refactor state references
+    [ ] - refactor base rates
+    [ ] - add switching animations/ colors
 [ ] - style buttons
 [ ] - add fonts
 [ ] - add sound effect for start/stop/leveling
 
 done: 
+[x] - add info i icon for modal to give fleet info
 [x] - split timer into h:m:s
 [x] - add save functionality
 [x] - add initial modal give info - use ? to bring it back

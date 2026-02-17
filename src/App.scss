@@ -89,27 +89,22 @@ $star-shadows: ();
     border-radius: 10px;
     padding: 20px;
     z-index: 2;
-    width: 300px;
+    width: 70%;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
-    .modal-header {
-      color: white;
-      font-size: 1.5em;
-      margin-bottom: 10px;
-    }
-
-    .modal-body {
-      color: white;
-      margin-bottom: 20px;
-    }
-
-    .modal-footer {
+    
+    .modal-inputs {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       width: 100%;
+      margin: 5px;
+      input {
+        height: 2em;
+        width: 45%;
+      }
     }
   }
   .credits-display {
@@ -137,6 +132,11 @@ $star-shadows: ();
     width: 75%;
     color: white;
     border: 1px solid white;
+
+    .row-one {
+      display: flex;
+      justify-content: space-around
+    }
 
     .resource-display {
       border: 1px solid white;
