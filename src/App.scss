@@ -131,15 +131,30 @@ $star-shadows: ();
     z-index: 1;
     width: 75%;
     color: white;
-    border: 1px solid white;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05); /* Semi-transparent background */
+    backdrop-filter: blur(1px);         /* The key blurring effect */
+    -webkit-backdrop-filter: blur(10px); /* Vendor prefix for compatibility */
+    border-radius: 10px;                 /* Rounded corners for a softer look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 
     .row-one {
       display: flex;
       justify-content: space-around
     }
 
+    .row-two {
+      display: flex;
+      justify-content: center;
+    }
     .resource-display {
-      border: 1px solid white;
+      padding: 5px;
+      button {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+        border: none;
+        border-radius: 10% 10%;
+      }
       position: relative;
       .resource-name {
         margin-left: 10%;
@@ -155,6 +170,19 @@ $star-shadows: ();
       }
       
     }
+    .button-row{
+      display: flex;
+      justify-content: center;
+      
+      button {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+        border: none;
+        border-radius: 10px;
+        width: 30%;
+        margin: 0px 10px;
+      }
+    }
 
   }
   button {
@@ -165,7 +193,6 @@ $star-shadows: ();
  
 }
  .message-display {
-    border: 1px solid white;
     width: 75%;
     margin-top: 10px;
     color: white;

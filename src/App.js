@@ -102,7 +102,6 @@ function App() {
     }
   }
 
-
   //click listener for upgrading the mining level of a resource
   function upgradeMiningLevel(resource){
     if(playerData.currentCredits === 0 ){
@@ -147,9 +146,6 @@ function App() {
     }, 5000)
   }
   
-
-
-  
   return (
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
       <i class="info-icon fa-solid fa-info"></i>
@@ -162,7 +158,7 @@ function App() {
       <div className="display">
         <div className="row-one">
           <div className="ship-name-div">
-            <span>Ship Name {playerData.shipName}</span>  
+            <span>Ship Name: {playerData.shipName}</span>  
           </div>
           <div className="ship-activity-div">
             <span>Ship Activity: {playerData.shipActivity}</span>
@@ -170,7 +166,7 @@ function App() {
           
         </div>
         <div className="row-two">
-          <span>Total Time: </span>
+          <span className="total-time">Total Time: </span>
           {Math.floor(playerData.totalTime / 3600)}h {Math.floor((playerData.totalTime % 3600) / 60)}m {playerData.totalTime % 60}s
         </div>
         {
@@ -180,9 +176,13 @@ function App() {
             )
           })
         }
+        <div className="button-row">
+          <button onClick={()=>{cycleTimer()}}>{isRunning ? 'Stop' : 'Start'}</button>
+          <button onClick={saveGame}>Save</button>
+        </div>
       </div>
-      <button onClick={()=>{cycleTimer()}}>{isRunning ? 'Stop' : 'Start'}</button>
-      <button onClick={saveGame}>Save</button>
+      
+      
       {messages ?  <Messages messages={messages}></Messages> : null}
 
     </div>

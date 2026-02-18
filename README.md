@@ -1,5 +1,4 @@
 to do:
-[x] - finish adjusting state in modal
 [ ] - break out component files
 [ ] - add defense upgrade
 [ ] - add random events
@@ -26,6 +25,9 @@ done:
 [x] - create resource display component
 [x] - calculate resources in the game loop
 [x] - add tokens into game loop calculation
+[x] - finish adjusting state in modal
+[x] -restyle display
+
 
 
 
