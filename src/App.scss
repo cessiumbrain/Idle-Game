@@ -106,6 +106,14 @@ $star-shadows: ();
         width: 45%;
       }
     }
+    button {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+        border: none;
+        border-radius: 10px;
+        width: 30%;
+        margin: 0px 10px;
+      }
   }
   .credits-display {
     position: absolute;
