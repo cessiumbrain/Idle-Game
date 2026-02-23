@@ -1,3 +1,5 @@
+import ResourceDisplay from './ResourceDisplay';
+import InstructionsModal from './InstructionsModal';
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import ship01 from './assets/ship 02/_0000_Layer-1.png'
@@ -10,26 +12,30 @@ function App() {
   const [shipFrameNumber, setShipFrameNumber] = useState(ship01)
   const [messages, setMessages] = useState([])
   const [playerData, setPlayerData] = useState({
-    totalTime: 0,
-    shipName: "",
-    shipActivity: "",
-    resourceUnits: {
-      iron: 0,
-      bronze: 0,
-      silver: 0,
-      gold: 0,
-    },
-    miningLevels: {
-      iron: 1,
-      bronze: 1,
-      silver: 1,
-      gold: 1
-    },
-
-    currentCredits: 0
-
-  })
-  const [showModal, setShowModal] = useState(true)
+    currentShip: {
+      totalTime: 0,
+      shipName: "",
+      shipActivity: "",
+      shipClass: "",
+      resourceUnits: {
+        iron: 0,
+        bronze: 0,
+        silver: 0,
+        gold: 0,
+      },
+      miningLevels: {
+        iron: 1,
+        bronze: 1,
+        silver: 1,
+        gold: 1
+      },
+      currentCredits: 0
+    }
+  }
+  )
+  const [showInstructionsModal, setShowInstructionsModal] = useState(true)
+  const [showInfoModal, setShowInfoModal] = useState(false)
+  const [hasSaveFile, setHasSaveFile] = useState(false)
 
   const frameIntervalRef = useRef(null)
   const timerIntervalRef = useRef(null)
@@ -37,22 +43,23 @@ function App() {
   const frames = [ship01, ship02, ship03]
 
   useEffect(() => {
-  const savedData = localStorage.getItem('playerData')
-
   //if there is saved data, load it and display a message confirming the load 
   // if not, pop up a modal with initial instructions and prompts
+  const savedData = localStorage.getItem('playerData')
 
-  // if (savedData) {
-  //   setPlayerData(JSON.parse(savedData))
-  //   setMessages(prevMessages=>{
-  //     console.log(prevMessages)
-  //     return [...prevMessages, 'game loaded']})
-  //   setTimeout(()=>{
-  //     setMessages(prevMessages=>{ return prevMessages.slice(1)})
-  //   }, 5000)
-  // } else {
-
-  // }
+  if (savedData) {
+    console.log(savedData)
+    setPlayerData(JSON.parse(savedData))
+    setMessages(prevMessages=>{
+      return [...prevMessages, 'game loaded']})
+    setTimeout(()=>{
+      setMessages(prevMessages=>{ return prevMessages.slice(1)})
+    }, 5000)
+    setHasSaveFile(true)
+  } else {
+    setShowInstructionsModal(true)
+    setHasSaveFile(false)
+  }
 }, [])
 
   function gameLoop(){
@@ -60,13 +67,16 @@ function App() {
 
     //calculate new resource units
     //increment total time by 1
-    //add a credit if the elapsed time is a multiple secondsPerCredit
+    //add a credit if the elapsed time is a multiple of secondsPerCredit
     calculateResources(playerData, baseRates)
     setPlayerData(prevData => ({
       ...prevData,
-      totalTime: prevData.totalTime + 1,
-      resourceUnits: calculateResources(prevData, baseRates),
-      currentCredits: calculateCreditsEarned(prevData.totalTime +1, prevData.currentCredits)
+      currentShip: {
+        ...prevData.currentShip, 
+      totalTime: prevData.currentShip.totalTime + 1,
+      resourceUnits: calculateResources(prevData.currentShip, baseRates),
+      currentCredits: calculateCreditsEarned(prevData.currentShip.totalTime +1, prevData.currentShip.currentCredits)
+      }
     }))
     
   }
@@ -104,7 +114,7 @@ function App() {
 
   //click listener for upgrading the mining level of a resource
   function upgradeMiningLevel(resource){
-    if(playerData.currentCredits === 0 ){
+    if(playerData.currentShip.currentCredits === 0 ){
       setMessages(['ERROR: not enough credits'])
 
       setTimeout(()=>{
@@ -112,15 +122,17 @@ function App() {
       },3000)
     } else {
 
-    setPlayerData(prevData=>({
-      ...prevData,
-      miningLevels: {
-        ...prevData.miningLevels,
-        [resource]: prevData.miningLevels[resource] + 1
-      },
-      currentCredits: prevData.currentCredits -1
-
-    }))
+      setPlayerData(prevData => ({
+        ...prevData,
+        currentShip: {
+          ...prevData.currentShip,
+          miningLevels: {
+            ...prevData.currentShip.miningLevels,
+            [resource]: prevData.currentShip.miningLevels[resource] + 1
+          },
+          currentCredits: prevData.currentShip.currentCredits - 1
+        }
+      }))
     }
     
 
@@ -129,7 +141,8 @@ function App() {
 
   //caculate credit reward
   function calculateCreditsEarned(totalSeconds, currentCredits){
-    if(totalSeconds % secondsPerCredit === 0){
+
+    if(totalSeconds % secondsPerCredit[playerData.currentShip.shipClass] === 0){
       return  currentCredits + 1
     } else {
       return currentCredits
@@ -138,20 +151,22 @@ function App() {
 
   //save game
   function saveGame(){
-    console.log('save game')
+
     localStorage.setItem('playerData', JSON.stringify(playerData))
     setMessages(['game saved'])
     setTimeout(()=>{
       setMessages(prevMessages=>prevMessages.slice(1))
     }, 5000)
+    setHasSaveFile(true)
   }
   
+
   return (
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
-      <i class="info-icon fa-solid fa-info"></i>
-      <i class="instructions-icon fa-solid fa-question" onClick={()=>setShowModal(true)}></i>
-      {showModal && <Modal setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowModal}></Modal>}
-      <div class="credits-display">Credits: {playerData.currentCredits}</div>
+      <i className="info-icon fa-solid fa-info"></i>
+      <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
+      {showInstructionsModal && <InstructionsModal hasSaveFile={hasSaveFile} setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowInstructionsModal}></InstructionsModal>}
+      <div className="credits-display">Credits: {playerData.currentShip.currentCredits}</div>
       <div className={`ship-animation`} >
         <img className={`ship ${isRunning ? 'flying' : 'stationary'}`} src={frames[shipFrameNumber] || ship01}/>
       </div>
@@ -163,21 +178,25 @@ function App() {
           <div className="ship-activity-div">
             <span>Ship Activity: {playerData.shipActivity}</span>
           </div>
+          <div className="ship-class-div">
+            <span>Ship Class: {playerData.shipClass}</span>
+          </div>
           
         </div>
         <div className="row-two">
           <span className="total-time">Total Time: </span>
-          {Math.floor(playerData.totalTime / 3600)}h {Math.floor((playerData.totalTime % 3600) / 60)}m {playerData.totalTime % 60}s
+          {Math.floor(playerData.currentShip.totalTime / 3600)}h {Math.floor((playerData.currentShip.totalTime % 3600) / 60)}m {playerData.currentShip.totalTime % 60}s
         </div>
         {
-          Object.keys(playerData.resourceUnits).map((resourceUnit)=>{
+          Object.keys(playerData.currentShip.resourceUnits).map((resourceUnit)=>{
+            console.log('resource unit', resourceUnit)
             return(
               <ResourceDisplay upgradeMiningLevel={upgradeMiningLevel}playerData={playerData} key={resourceUnit} resource={resourceUnit}></ResourceDisplay>
             )
           })
         }
         <div className="button-row">
-          <button onClick={()=>{cycleTimer()}}>{isRunning ? 'Stop' : 'Start'}</button>
+          `<button onClick={()=>{cycleTimer()}}>{isRunning ? 'Stop' : 'Start'}</button>
           <button onClick={saveGame}>Save</button>
         </div>
       </div>
@@ -189,17 +208,7 @@ function App() {
   );
 }
 
-function ResourceDisplay(props){
 
-  return(
-    <div className={`resource-display ${props.resource}`}  >
-      <span className="resource-name">{props.resource} : {Math.round(props.playerData.resourceUnits[props.resource])}</span>
-      <div className="mining-level">mining level {props.playerData.miningLevels[props.resource]}
-        <button onClick={()=>{props.upgradeMiningLevel(props.resource)}} className="upgrade-button">+</button>
-      </div>
-    </div>
-  )
-}
 
 function Messages(props){
 
@@ -217,38 +226,6 @@ function Messages(props){
   )
 }
 
-function Modal(props){
-  const [shipName, setShipName] = useState(props.playerData.shipName || '')
-  const [shipActivity, setShipActivity] = useState(props.playerData.shipActivity || '')
 
-  function handleCloseModal(){
-    console.log('close modal')
-    props.setShowModal(false)
-    props.setPlayerData(prevData=>({
-      ...prevData,
-      shipName: shipName,
-      shipActivity: shipActivity
-    }))
-  }
-
-  return(
-    <div className="info-modal">
-      Idle Game is designed to reward you for doing things that aren't as inherently rewarding as they ought to be.  When doing something good for you, start the timer.  Every {(secondsPerCredit /60).toFixed(2)} minutes, you'll earn one credit to upgrade the rate at which your ship gathers a certain resource.
-      <div className="modal-inputs">
-        <label>Ship Name:</label>
-        <input className="ship-name" onChange={(e)=>{setShipName(e.target.value)}}placeholder={props.playerData.shipName || 'enter ship name'}></input>
-      </div>
-      <div className="modal-inputs">
-        <label>Activity</label>
-        <input onChange={(e)=>{
-          console.log('change shipname input') 
-          setShipActivity(e.target.value)}} className="ship-activity" placeholder={props.playerData.shipActivity || 'enter activity'}></input>
-      </div>
-        
-      
-      <button onClick={handleCloseModal}> save & close</button>
-      </div>
-  )
-}
 
 export default App;

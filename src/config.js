@@ -1,26 +1,61 @@
+export const shipClasses = [
+    {
+        name: 'Utility',
+        description: 'for daily maintenance tasks, rewards are quicker'
+    },
+    {
+        name: 'Research',
+        description: 'for personal growth tasks, rewards are spaced further apart'
+    },
+    {
+        name: 'Vanguard',
+        description: 'for difficult, or strenuous, or emotionally challenging tasks'
+    }
+]
 //resource gathering rates per second
-
 export const baseRates = {
-    iron: .1,
-    bronze: 0.03,
-    silver: 0.01,
-    gold: 0.005
+    Research: {
+        iron: .1,
+        bronze: 0.03,
+        silver: 0.01,
+        gold: 0.005
+    },
+    Utility: {
+        iron:   0.16,
+        bronze: 0.045,
+        silver: 0.006,
+        gold:   0.002,
+    },
+    Vanguard: {
+        iron:   0.06,
+        bronze: 0.025,
+        silver: 0.02,
+        gold:   0.012
+    }
+    
 }
 
-export const secondsPerCredit = 10
+export const secondsPerCredit = {
+    Research: 5,
+    Utility: 5,
+    Vanguard: 5
+
+}
 
 //
-export function calculateResources(playerData, baseRates){
+export function calculateResources(currentShipData, baseRates){
     console.log('calculate resources')
+    console.log(currentShipData)
 
     const newResourceUnits = {
         
     }
 
-    for (const resource in playerData.resourceUnits) {
-        const currentUnits = playerData.resourceUnits[resource]
+    for (const resource in currentShipData.resourceUnits) {
+        console.log(resource)
+        const currentUnits = currentShipData.resourceUnits[resource]
         const baseRate = baseRates[resource]
-        const currentLevel = playerData.miningLevels[resource]
+        const currentLevel = currentShipData.miningLevels[resource]
         let newUnits = currentUnits + baseRate * currentLevel * (Math.log(currentLevel +1))
         newResourceUnits[resource] = newUnits
     }
