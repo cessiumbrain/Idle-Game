@@ -12,6 +12,7 @@ function App() {
   const [shipFrameNumber, setShipFrameNumber] = useState(ship01)
   const [messages, setMessages] = useState([])
   const [playerData, setPlayerData] = useState({
+    fleet:[],
     currentShip: {
       totalTime: 0,
       shipName: "",
@@ -61,7 +62,32 @@ function App() {
     setHasSaveFile(false)
   }
 }, [])
+  function createNewShip(shipName, shipClass, shipActivity) {
+    return {
+      shipID: crypto.randomUUID(),
+      shipName: shipName,
+      shipActivity: shipActivity,
+      shipClass: shipClass,
+      totalTime: 0,
+      resourceUnits: {
+        iron: 0,
+        bronze: 0,
+        silver: 0,
+        gold: 0,
+      },
+      miningLevels: {
+        iron: 1,
+        bronze: 1,
+        silver: 1,
+        gold: 1
+      },
+      currentCredits: 0
+    }
+    
+  }
 
+  
+  
   function gameLoop(){
     console.log('game loop')
 
@@ -189,7 +215,7 @@ function App() {
         </div>
         {
           Object.keys(playerData.currentShip.resourceUnits).map((resourceUnit)=>{
-            console.log('resource unit', resourceUnit)
+
             return(
               <ResourceDisplay upgradeMiningLevel={upgradeMiningLevel}playerData={playerData} key={resourceUnit} resource={resourceUnit}></ResourceDisplay>
             )

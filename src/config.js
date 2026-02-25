@@ -45,17 +45,18 @@ export const secondsPerCredit = {
 //
 export function calculateResources(currentShipData, baseRates){
     console.log('calculate resources')
-    console.log(currentShipData)
+
 
     const newResourceUnits = {
         
     }
 
     for (const resource in currentShipData.resourceUnits) {
-        console.log(resource)
+
         const currentUnits = currentShipData.resourceUnits[resource]
-        const baseRate = baseRates[resource]
+        const baseRate = baseRates[currentShipData.shipClass][resource]
         const currentLevel = currentShipData.miningLevels[resource]
+        console.log(currentUnits, baseRate, currentLevel)
         let newUnits = currentUnits + baseRate * currentLevel * (Math.log(currentLevel +1))
         newResourceUnits[resource] = newUnits
     }

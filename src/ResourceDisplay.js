@@ -1,5 +1,5 @@
 function ResourceDisplay(props){
-  console.log(props.playerData.currentShip.resourceUnits[props.resource])
+  // console.log(props.playerData.currentShip.resourceUnits[props.resource])
   return(
     <div className={`resource-display ${props.resource}`}  >
       <span className="resource-name">{props.resource} : {Math.round(props.playerData.currentShip.resourceUnits[props.resource])}</span>
