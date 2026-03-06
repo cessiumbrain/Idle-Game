@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Idle-Game/static/css/main.952a1ed6.css",
-    "main.js": "/Idle-Game/static/js/main.79211538.js",
+    "main.css": "/Idle-Game/static/css/main.f36a063b.css",
+    "main.js": "/Idle-Game/static/js/main.1a7dfb87.js",
     "static/js/453.5ad59267.chunk.js": "/Idle-Game/static/js/453.5ad59267.chunk.js",
     "static/media/space-background.png": "/Idle-Game/static/media/space-background.bc8a3e5c6d3726302b2f.png",
     "index.html": "/Idle-Game/index.html",
-    "main.952a1ed6.css.map": "/Idle-Game/static/css/main.952a1ed6.css.map",
-    "main.79211538.js.map": "/Idle-Game/static/js/main.79211538.js.map",
+    "main.f36a063b.css.map": "/Idle-Game/static/css/main.f36a063b.css.map",
+    "main.1a7dfb87.js.map": "/Idle-Game/static/js/main.1a7dfb87.js.map",
     "453.5ad59267.chunk.js.map": "/Idle-Game/static/js/453.5ad59267.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.952a1ed6.css",
-    "static/js/main.79211538.js"
+    "static/css/main.f36a063b.css",
+    "static/js/main.1a7dfb87.js"
   ]
 }
