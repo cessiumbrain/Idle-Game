@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { secondsPerCredit, shipClasses } from "./config"
+import { secondsPerCredit, shipClasses, createNewShip } from "./config"
 
 function InstructionsModal(props){
     const [shipName, setShipName] = useState(props.playerData.shipName || '')
@@ -7,11 +7,9 @@ function InstructionsModal(props){
     const [shipClass, setShipClass] = useState(props.playerData.shipClass || '')
     const [errorMessage, setErrorMessage] = useState('')
 
-
-
   function handleCloseModal(){
     //if there's already a save file and the config form isn't needed- just close the form
-    if(props.hasSaveFile){
+    if(props.currentShip){
         props.setShowModal(false)
         return
     }
@@ -23,16 +21,14 @@ function InstructionsModal(props){
     } else {
         //if valid
     props.setShowModal(false)
+    const newShipData= createNewShip(shipName, shipClass, shipActivity)
     props.setPlayerData(prevData=>({
       ...prevData,
-      currentShip: {
-        ...prevData.currentShip,
-        shipName: shipName,
-        shipActivity: shipActivity,
-        shipClass: shipClass
-      }
+      fleet: [...prevData.fleet, newShipData],
+      currentShipID: newShipData.shipID
       
     }))
+    props.setCurrentShipID(newShipData.shipID)
     }
     
   }
@@ -45,7 +41,7 @@ function InstructionsModal(props){
       
       
       {
-        props.hasSaveFile ? '' : <ModalInputs 
+        props.playerData.fleet.length!=0 ? '' : <ModalInputs 
         playerData={props.playerData} 
         setPlayerData={props.setPlayerData}
         shipClass={shipClass}
@@ -57,7 +53,7 @@ function InstructionsModal(props){
       
         
       
-      <button onClick={handleCloseModal}> save & close</button>
+      <button onClick={handleCloseModal}>Close</button>
       <div className="modal-error-div">
         {errorMessage}
       </div>

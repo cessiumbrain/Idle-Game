@@ -1,18 +1,23 @@
+//shift time for credit down for Utility class and resources per second up for Iron to test
+
 export const shipClasses = [
     {
         name: 'Utility',
-        description: 'for daily maintenance tasks, rewards are quicker'
+        description: 'for daily maintenance tasks, rewards are quicker',
+        sprites: []
     },
     {
         name: 'Research',
-        description: 'for personal growth tasks, rewards are spaced further apart'
+        description: 'for personal growth tasks, rewards are spaced further apart',
+        sprites: []
     },
     {
         name: 'Vanguard',
-        description: 'for difficult, or strenuous, or emotionally challenging tasks'
+        description: 'for difficult, or strenuous, or emotionally challenging tasks',
+        sprites: []
     }
 ]
-//resource gathering rates per second
+//resource gathering rates
 export const baseRates = {
     Research: {
         iron: .1,
@@ -25,6 +30,7 @@ export const baseRates = {
         bronze: 0.045,
         silver: 0.006,
         gold:   0.002,
+        
     },
     Vanguard: {
         iron:   0.06,
@@ -44,22 +50,45 @@ export const secondsPerCredit = {
 
 //
 export function calculateResources(currentShipData, baseRates){
-    console.log('calculate resources')
 
-
-    const newResourceUnits = {
-        
-    }
+    const newResourceUnits = {}
 
     for (const resource in currentShipData.resourceUnits) {
 
+
         const currentUnits = currentShipData.resourceUnits[resource]
+
         const baseRate = baseRates[currentShipData.shipClass][resource]
+
         const currentLevel = currentShipData.miningLevels[resource]
-        console.log(currentUnits, baseRate, currentLevel)
+
         let newUnits = currentUnits + baseRate * currentLevel * (Math.log(currentLevel +1))
         newResourceUnits[resource] = newUnits
     }
     return newResourceUnits
     
 }
+
+export function createNewShip(shipName, shipClass, shipActivity) {
+    return {
+      shipID: crypto.randomUUID(),
+      shipName: shipName,
+      shipActivity: shipActivity,
+      shipClass: shipClass,
+      totalTime: 0,
+      resourceUnits: {
+        iron: 0,
+        bronze: 0,
+        silver: 0,
+        gold: 0,
+      },
+      miningLevels: {
+        iron: 1,
+        bronze: 1,
+        silver: 1,
+        gold: 1
+      },
+      currentCredits: 0
+    }
+    
+  }

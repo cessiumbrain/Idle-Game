@@ -2,6 +2,9 @@ import ResourceDisplay from './ResourceDisplay';
 import InstructionsModal from './InstructionsModal';
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
+import FleetModal from './FleetModal';
+import CreateShipModal from './CreateShipModal';
+
 import ship01 from './assets/ship 02/_0000_Layer-1.png'
 import ship02 from './assets/ship 02/_0001_Layer-2.png'
 import ship03 from './assets/ship 02/_0002_Layer-3.png'
@@ -12,31 +15,56 @@ function App() {
   const [shipFrameNumber, setShipFrameNumber] = useState(ship01)
   const [messages, setMessages] = useState([])
   const [playerData, setPlayerData] = useState({
-    fleet:[],
-    currentShip: {
-      totalTime: 0,
-      shipName: "",
-      shipActivity: "",
-      shipClass: "",
-      resourceUnits: {
-        iron: 0,
-        bronze: 0,
-        silver: 0,
-        gold: 0,
-      },
-      miningLevels: {
-        iron: 1,
-        bronze: 1,
-        silver: 1,
-        gold: 1
-      },
-      currentCredits: 0
-    }
+    fleet:[
+    //   {
+    //   totalTime: 0,
+    //   shipName: "test n",
+    //   shipActivity: "test a",
+    //   shipClass: "test c",
+    //   shipID: 1,
+    //   resourceUnits: {
+    //     iron: 0,
+    //     bronze: 0,
+    //     silver: 0,
+    //     gold: 0,
+    //   },
+    //   miningLevels: {
+    //     iron: 1,
+    //     bronze: 1,
+    //     silver: 1,
+    //     gold: 1
+    //   },
+    //   currentCredits: 0
+    // }
+  ],
+    // currentShip: {
+    //   totalTime: 0,
+    //   shipName: "",
+    //   shipActivity: "",
+    //   shipClass: "",
+    //   shipID: 1,
+    //   resourceUnits: {
+    //     iron: 0,
+    //     bronze: 0,
+    //     silver: 0,
+    //     gold: 0,
+    //   },
+    //   miningLevels: {
+    //     iron: 1,
+    //     bronze: 1,
+    //     silver: 1,
+    //     gold: 1
+    //   },
+    //   currentCredits: 0
+    // }
   }
   )
-  const [showInstructionsModal, setShowInstructionsModal] = useState(true)
-  const [showInfoModal, setShowInfoModal] = useState(false)
+  const [showInstructionsModal, setShowInstructionsModal] = useState(false)
+  const [showFleetModal, setShowFleetModal] = useState(false)
+  const [showCreateShipModal, setShowCreateShipModal] = useState(false)
   const [hasSaveFile, setHasSaveFile] = useState(false)
+  const [currentShipID, setCurrentShipID] = useState(null)
+
 
   const frameIntervalRef = useRef(null)
   const timerIntervalRef = useRef(null)
@@ -49,7 +77,6 @@ function App() {
   const savedData = localStorage.getItem('playerData')
 
   if (savedData) {
-    console.log(savedData)
     setPlayerData(JSON.parse(savedData))
     setMessages(prevMessages=>{
       return [...prevMessages, 'game loaded']})
@@ -61,33 +88,10 @@ function App() {
     setShowInstructionsModal(true)
     setHasSaveFile(false)
   }
-}, [])
-  function createNewShip(shipName, shipClass, shipActivity) {
-    return {
-      shipID: crypto.randomUUID(),
-      shipName: shipName,
-      shipActivity: shipActivity,
-      shipClass: shipClass,
-      totalTime: 0,
-      resourceUnits: {
-        iron: 0,
-        bronze: 0,
-        silver: 0,
-        gold: 0,
-      },
-      miningLevels: {
-        iron: 1,
-        bronze: 1,
-        silver: 1,
-        gold: 1
-      },
-      currentCredits: 0
-    }
-    
-  }
 
-  
-  
+}, [])
+
+
   function gameLoop(){
     console.log('game loop')
 
@@ -95,14 +99,19 @@ function App() {
     //increment total time by 1
     //add a credit if the elapsed time is a multiple of secondsPerCredit
     calculateResources(playerData, baseRates)
+
+    
     setPlayerData(prevData => ({
       ...prevData,
-      currentShip: {
-        ...prevData.currentShip, 
-      totalTime: prevData.currentShip.totalTime + 1,
-      resourceUnits: calculateResources(prevData.currentShip, baseRates),
-      currentCredits: calculateCreditsEarned(prevData.currentShip.totalTime +1, prevData.currentShip.currentCredits)
-      }
+      fleet: prevData.fleet.map(ship=>{
+      return  ship.shipID === currentShipID ? {
+          ...ship,
+          totalTime: ship.totalTime + 1,
+          resourceUnits: calculateResources(ship, baseRates),
+          currentCredits: calculateCreditsEarned(ship, secondsPerCredit) 
+        } : ship
+      })
+      
     }))
     
   }
@@ -140,7 +149,8 @@ function App() {
 
   //click listener for upgrading the mining level of a resource
   function upgradeMiningLevel(resource){
-    if(playerData.currentShip.currentCredits === 0 ){
+    const currentShip = playerData.fleet.find(ship=>ship.shipID === currentShipID)
+    if(currentShip.currentCredits === 0 ){
       setMessages(['ERROR: not enough credits'])
 
       setTimeout(()=>{
@@ -150,28 +160,27 @@ function App() {
 
       setPlayerData(prevData => ({
         ...prevData,
-        currentShip: {
-          ...prevData.currentShip,
-          miningLevels: {
-            ...prevData.currentShip.miningLevels,
-            [resource]: prevData.currentShip.miningLevels[resource] + 1
-          },
-          currentCredits: prevData.currentShip.currentCredits - 1
-        }
+        fleet: prevData.fleet.map(ship => {
+          return ship.shipID === currentShipID ? {
+            ...ship,
+            miningLevels: {
+              ...ship.miningLevels,
+              [resource]: ship.miningLevels[resource] + 1
+            },
+            currentCredits: ship.currentCredits - 1
+          } : ship
+        })
       }))
     }
-    
-
-  
   }
 
   //caculate credit reward
-  function calculateCreditsEarned(totalSeconds, currentCredits){
+  function calculateCreditsEarned(currentShip, secondsPerCredit){
 
-    if(totalSeconds % secondsPerCredit[playerData.currentShip.shipClass] === 0){
-      return  currentCredits + 1
+    if(currentShip.totalTime % secondsPerCredit[currentShip.shipClass] === 0){
+      return  currentShip.currentCredits + 1
     } else {
-      return currentCredits
+      return currentShip.currentCredits
     }
   }
 
@@ -185,47 +194,95 @@ function App() {
     }, 5000)
     setHasSaveFile(true)
   }
+
+  //create new ship
+  function createNewShip(shipName, shipActivity, shipClass){
+
+    //stop the timer if it's running
+    if(isRunning){
+      cycleTimer()
+    }
+    //create a new ship object and add it to the fleet array
+    const newShip = {
+      shipName: shipName,
+      shipActivity: shipActivity,
+      shipClass: shipClass,
+      shipID: crypto.randomUUID(),
+      totalTime: 0,
+      resourceUnits: {
+        iron: 0,
+        bronze: 0,
+        silver: 0,
+        gold: 0,
+      },
+      miningLevels: {
+        iron: 1,
+        bronze: 1,
+        silver: 1,
+        gold: 1
+      },
+      currentCredits: 0
+    }
+
+    setPlayerData(prevData=>({
+      ...prevData,
+      fleet: [...prevData.fleet, newShip]
+    }))
+    //set the current ship ID to the new ship's ID
+    setCurrentShipID(newShip.shipID)
+
+  }
   
+  
+  const currentShip = playerData.fleet.find(ship=>ship.shipID === currentShipID) || null
+
 
   return (
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
-      <i className="info-icon fa-solid fa-info"></i>
+      <i className="info-icon fa-solid fa-info" onClick={()=>setShowFleetModal(true)}></i>
       <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
-      {showInstructionsModal && <InstructionsModal hasSaveFile={hasSaveFile} setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowInstructionsModal}></InstructionsModal>}
-      <div className="credits-display">Credits: {playerData.currentShip.currentCredits}</div>
+      <i className="add-ship-icon fa-solid fa-plus" onClick={()=>{setShowCreateShipModal(true)}}></i>
+
+      {showInstructionsModal && <InstructionsModal currentShip={currentShip} setCurrentShipID={setCurrentShipID} hasSaveFile={hasSaveFile} setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowInstructionsModal} ></InstructionsModal>}
+
+      {showFleetModal && <FleetModal isRunning={isRunning} cycleTimer={cycleTimer} setCurrentShipID={setCurrentShipID} currentShipID={currentShipID} fleet={playerData.fleet} setShowFleetModal={setShowFleetModal}></FleetModal>}
+
+      {showCreateShipModal && <CreateShipModal createNewShip={createNewShip}setShowCreateShipModal={setShowCreateShipModal}></CreateShipModal>}
+      <div className="credits-display">Credits: {currentShip ? currentShip.currentCredits :''}</div>
       <div className={`ship-animation`} >
         <img className={`ship ${isRunning ? 'flying' : 'stationary'}`} src={frames[shipFrameNumber] || ship01}/>
       </div>
+      { currentShip ?
       <div className="display">
         <div className="row-one">
           <div className="ship-name-div">
-            <span>Ship Name: {playerData.shipName}</span>  
+            <span>Ship Name: {currentShip.shipName}</span>  
           </div>
           <div className="ship-activity-div">
-            <span>Ship Activity: {playerData.shipActivity}</span>
+            <span>Ship Activity: {currentShip.shipActivity}</span>
           </div>
           <div className="ship-class-div">
-            <span>Ship Class: {playerData.shipClass}</span>
+            <span>Ship Class: {currentShip.shipClass}</span>
           </div>
           
         </div>
         <div className="row-two">
           <span className="total-time">Total Time: </span>
-          {Math.floor(playerData.currentShip.totalTime / 3600)}h {Math.floor((playerData.currentShip.totalTime % 3600) / 60)}m {playerData.currentShip.totalTime % 60}s
+          {Math.floor(currentShip.totalTime / 3600)}h {Math.floor((currentShip.totalTime % 3600) / 60)}m {currentShip.totalTime % 60}s
         </div>
         {
-          Object.keys(playerData.currentShip.resourceUnits).map((resourceUnit)=>{
+          currentShip ? Object.keys(currentShip.resourceUnits).map((resourceUnit)=>{
 
             return(
-              <ResourceDisplay upgradeMiningLevel={upgradeMiningLevel}playerData={playerData} key={resourceUnit} resource={resourceUnit}></ResourceDisplay>
+              <ResourceDisplay upgradeMiningLevel={upgradeMiningLevel} currentShip={currentShip} playerData={playerData} key={resourceUnit} resource={resourceUnit}></ResourceDisplay>
             )
-          })
+          }) : null
         }
         <div className="button-row">
           `<button onClick={()=>{cycleTimer()}}>{isRunning ? 'Stop' : 'Start'}</button>
           <button onClick={saveGame}>Save</button>
         </div>
-      </div>
+      </div> : null}
       
       
       {messages ?  <Messages messages={messages}></Messages> : null}

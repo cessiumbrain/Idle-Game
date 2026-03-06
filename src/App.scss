@@ -79,8 +79,17 @@ $star-shadows: ();
     padding: 5px;
     cursor: pointer;
   }
+  .add-ship-icon {
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    border: 1px solid white;
+    border-radius: 100%;
+    padding: 5px;
+  }
 
-    .info-modal {
+    .info-modal, .fleet-modal, .create-ship-modal {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -98,7 +107,8 @@ $star-shadows: ();
       color: white;
   
       .modal-inputs-wrapper {
-  
+        display: flex;
+        flex-direction: column;
         width: 100%;
         margin: 5px;
   
@@ -128,6 +138,44 @@ $star-shadows: ();
         margin-top: 10px;
       }
     }
+    .fleet-modal{
+      .button-div{
+        display: flex;
+        width: 90%;
+        justify-content: space-around;;
+        button{
+          width: 45%;
+        }
+      }
+      .ships-list {
+        width: 90%;
+        border: 1px solid white;
+        margin-bottom: 10px;
+        .ship-info-header{
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+        .ship-info{
+          display: grid;
+          border: 1px solid white;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          column-gap: 1px;
+          background: red;
+          button{
+            width: 90%;
+            margin: 0px;
+          }
+        }
+      }
+    }
+    .create-ship-modal{
+      .button-row{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+      }
+    }
+
   .credits-display {
     position: absolute;
     top: 10px;
