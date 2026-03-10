@@ -226,8 +226,7 @@ function App() {
       setShipAnimation('fly-in')
       setCurrentShipID(shipID)
     }, 3000)
-    //fly in animation last three seconds
-
+    
   }
   
 
