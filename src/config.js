@@ -1,20 +1,40 @@
-//shift time for credit down for Utility class and resources per second up for Iron to test
+import ship10 from './assets/ship_1/_0000_Layer-1.png'
+import ship11 from './assets/ship_1/_0001_Layer-2.png'
+import ship12 from './assets/ship_1/_0002_Layer-3.png'
+import ship13 from './assets/ship_1/_0003_Layer-4.png'
+import ship14 from './assets/ship_1/_0004_Layer-5.png'
+
+import ship20 from './assets/ship_2/_0000_Layer-1.png'
+import ship21 from './assets/ship_2/_0001_Layer-2.png'
+import ship22 from './assets/ship_2/_0002_Layer-3.png'
+import ship23 from './assets/ship_2/_0003_Layer-4.png'
+import ship24 from './assets/ship_2/_0004_Layer-5.png'
+
+import ship30 from './assets/ship_3/_0000_Layer-1.png'
+import ship31 from './assets/ship_3/_0001_Layer-2.png'
+import ship32 from './assets/ship_3/_0002_Layer-3.png'
+import ship33 from './assets/ship_3/_0003_Layer-4.png'
+import ship34 from './assets/ship_3/_0004_Layer-5.png'
+
+
+
+
 
 export const shipClasses = [
     {
         name: 'Utility',
         description: 'for daily maintenance tasks, rewards are quicker',
-        sprites: []
+        sprites: [ship10, ship11, ship12, ship13, ship14]
     },
     {
         name: 'Research',
         description: 'for personal growth tasks, rewards are spaced further apart',
-        sprites: []
+        sprites: [ship20, ship21, ship22, ship23, ship24]
     },
     {
         name: 'Vanguard',
         description: 'for difficult, or strenuous, or emotionally challenging tasks',
-        sprites: []
+        sprites: [ship30, ship31, ship32, ship33, ship34]
     }
 ]
 //resource gathering rates

@@ -4,15 +4,15 @@ import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import FleetModal from './FleetModal';
 import CreateShipModal from './CreateShipModal';
+import { shipClasses } from './config';
+import ship from './assets/ship_1/_0000_Layer-1.png'
 
-import ship01 from './assets/ship 02/_0000_Layer-1.png'
-import ship02 from './assets/ship 02/_0001_Layer-2.png'
-import ship03 from './assets/ship 02/_0002_Layer-3.png'
+
 import {calculateResources, baseRates, secondsPerCredit} from './config'
 
 function App() {
   const [isRunning, setIsRunning] = useState(false)
-  const [shipFrameNumber, setShipFrameNumber] = useState(ship01)
+  const [shipFrameNumber, setShipFrameNumber] = useState(0)
   const [messages, setMessages] = useState([])
   const [playerData, setPlayerData] = useState({
     fleet:[
@@ -37,26 +37,6 @@ function App() {
     //   currentCredits: 0
     // }
   ],
-    // currentShip: {
-    //   totalTime: 0,
-    //   shipName: "",
-    //   shipActivity: "",
-    //   shipClass: "",
-    //   shipID: 1,
-    //   resourceUnits: {
-    //     iron: 0,
-    //     bronze: 0,
-    //     silver: 0,
-    //     gold: 0,
-    //   },
-    //   miningLevels: {
-    //     iron: 1,
-    //     bronze: 1,
-    //     silver: 1,
-    //     gold: 1
-    //   },
-    //   currentCredits: 0
-    // }
   }
   )
   const [showInstructionsModal, setShowInstructionsModal] = useState(false)
@@ -64,14 +44,19 @@ function App() {
   const [showCreateShipModal, setShowCreateShipModal] = useState(false)
   const [hasSaveFile, setHasSaveFile] = useState(false)
   const [currentShipID, setCurrentShipID] = useState(null)
+  const [shipAnimation, setShipAnimation] = useState('')
 
 
   const frameIntervalRef = useRef(null)
   const timerIntervalRef = useRef(null)
 
-  const frames = [ship01, ship02, ship03]
+  const currentShip = playerData.fleet.find(ship=>ship.shipID === currentShipID) || null
+  const frames = shipClasses.find(cls=>cls.name === currentShip?.shipClass)?.sprites || [ship]
+
+  console.log(frames)
 
   useEffect(() => {
+
   //if there is saved data, load it and display a message confirming the load 
   // if not, pop up a modal with initial instructions and prompts
   const savedData = localStorage.getItem('playerData')
@@ -233,8 +218,20 @@ function App() {
 
   }
   
+  function changeShip(shipID){
+
+    setShipAnimation('fly-out')
+    //flyout animation lasts three seconds
+    setTimeout(()=>{
+      setShipAnimation('fly-in')
+    }, 3000)
+    //fly in animation last three seconds
+    setTimeout(()=>{
+      setShipAnimation('')
+    }, 6000)
+  }
   
-  const currentShip = playerData.fleet.find(ship=>ship.shipID === currentShipID) || null
+
 
 
   return (
@@ -250,7 +247,7 @@ function App() {
       {showCreateShipModal && <CreateShipModal createNewShip={createNewShip}setShowCreateShipModal={setShowCreateShipModal}></CreateShipModal>}
       <div className="credits-display">Credits: {currentShip ? currentShip.currentCredits :''}</div>
       <div className={`ship-animation`} >
-        <img className={`ship ${isRunning ? 'flying' : 'stationary'}`} src={frames[shipFrameNumber] || ship01}/>
+        <img className={`ship ${isRunning ? 'flying' : 'stationary'} ${shipAnimation}`} src={frames[shipFrameNumber] || ship}/>
       </div>
       { currentShip ?
       <div className="display">

@@ -53,7 +53,7 @@ function InstructionsModal(props){
       
         
       
-      <button onClick={handleCloseModal}>Close</button>
+      <button onClick={handleCloseModal}>{shipClass && shipName && shipActivity ? 'Next' : 'Close'}</button>
       <div className="modal-error-div">
         {errorMessage}
       </div>
