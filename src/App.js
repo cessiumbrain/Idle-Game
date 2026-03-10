@@ -224,11 +224,10 @@ function App() {
     //flyout animation lasts three seconds
     setTimeout(()=>{
       setShipAnimation('fly-in')
+      setCurrentShipID(shipID)
     }, 3000)
     //fly in animation last three seconds
-    setTimeout(()=>{
-      setShipAnimation('')
-    }, 6000)
+
   }
   
 
