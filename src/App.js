@@ -6,6 +6,8 @@ import FleetModal from './FleetModal';
 import CreateShipModal from './CreateShipModal';
 import { shipClasses } from './config';
 import ship from './assets/ship_1/_0000_Layer-1.png'
+import launch from './assets/sounds/launch.mp3'
+import stopAudio from './assets/sounds/stop.wav'
 
 
 import {calculateResources, baseRates, secondsPerCredit} from './config'
@@ -53,10 +55,9 @@ function App() {
   const currentShip = playerData.fleet.find(ship=>ship.shipID === currentShipID) || null
   const frames = shipClasses.find(cls=>cls.name === currentShip?.shipClass)?.sprites || [ship]
 
-  console.log(frames)
 
+//on load
   useEffect(() => {
-
   //if there is saved data, load it and display a message confirming the load 
   // if not, pop up a modal with initial instructions and prompts
   const savedData = localStorage.getItem('playerData')
@@ -78,8 +79,6 @@ function App() {
 
 
   function gameLoop(){
-    console.log('game loop')
-
     //calculate new resource units
     //increment total time by 1
     //add a credit if the elapsed time is a multiple of secondsPerCredit
@@ -103,10 +102,16 @@ function App() {
 
   //turn the timer off or on and call all functions required to start or stop the game loop
   function cycleTimer(){
-    console.log('cycle timer')
-
-    //if the timer is stopped, start it...
+    //if the timer is stopped...
     if(!isRunning){
+      //play launch sound
+      try {
+      const launchSound = new Audio(launch)
+      launchSound.play()
+      } catch (error){
+        throw new Error( `failed to load launch sound ${error}`)
+      }
+      
       //change running state
       setIsRunning(true)
 
@@ -118,9 +123,17 @@ function App() {
         const randomNum = Math.floor(Math.random()*3)
         setShipFrameNumber(randomNum)
       }, 4000)
+    } 
+    //if the timer is running...
+    else {
 
-    } else {
-      console.log('stopping timer')
+      //play stop sound
+      try {
+        const stopSound = new Audio(stopAudio)
+        stopSound.play()
+      } catch(error){
+        throw new Error(`failed to load stop sound ${error}`)
+      }
       setIsRunning(false)
 
       clearInterval(frameIntervalRef.current);
@@ -161,7 +174,7 @@ function App() {
 
   //caculate credit reward
   function calculateCreditsEarned(currentShip, secondsPerCredit){
-
+    //if you earned a credit
     if(currentShip.totalTime % secondsPerCredit[currentShip.shipClass] === 0){
       return  currentShip.currentCredits + 1
     } else {
@@ -182,7 +195,6 @@ function App() {
 
   //create new ship
   function createNewShip(shipName, shipActivity, shipClass){
-
     //stop the timer if it's running
     if(isRunning){
       cycleTimer()
@@ -213,8 +225,7 @@ function App() {
       ...prevData,
       fleet: [...prevData.fleet, newShip]
     }))
-    //set the current ship ID to the new ship's ID
-    setCurrentShipID(newShip.shipID)
+    changeShip(newShip.shipID)
 
   }
   
@@ -226,19 +237,16 @@ function App() {
       setShipAnimation('fly-in')
       setCurrentShipID(shipID)
     }, 3000)
-    
+
   }
   
-
-
-
   return (
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
       <i className="info-icon fa-solid fa-info" onClick={()=>setShowFleetModal(true)}></i>
       <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
       <i className="add-ship-icon fa-solid fa-plus" onClick={()=>{setShowCreateShipModal(true)}}></i>
 
-      {showInstructionsModal && <InstructionsModal currentShip={currentShip} setCurrentShipID={setCurrentShipID} hasSaveFile={hasSaveFile} setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowInstructionsModal} ></InstructionsModal>}
+      {showInstructionsModal && <InstructionsModal currentShip={currentShip} changeShip={changeShip} hasSaveFile={hasSaveFile} setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowInstructionsModal} ></InstructionsModal>}
 
       {showFleetModal && <FleetModal isRunning={isRunning} cycleTimer={cycleTimer} setCurrentShipID={setCurrentShipID} currentShipID={currentShipID} fleet={playerData.fleet} setShowFleetModal={setShowFleetModal}></FleetModal>}
 

@@ -24,13 +24,12 @@ function InstructionsModal(props){
     const newShipData= createNewShip(shipName, shipClass, shipActivity)
     props.setPlayerData(prevData=>({
       ...prevData,
-      fleet: [...prevData.fleet, newShipData],
-      currentShipID: newShipData.shipID
-      
+      fleet: [...prevData.fleet, newShipData]
     }))
-    props.setCurrentShipID(newShipData.shipID)
+
+    props.changeShip(newShipData.shipID)
+
     }
-    
   }
 
   return(

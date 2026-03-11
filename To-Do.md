@@ -1,16 +1,22 @@
 the MVP is to be able to create and switch between multiple ships
 
 to do:
-[ ] - add flyin/out animation
+[x] - add flyin/out animation
 [x] - add sprites to classes utility
 [x] - restyle fleet div
+[x] - commit and merge
+
+[ ] - introduce tests
+[ ] - introduce error handling
+[ ] - deploy then switch to github issues and projects
+[ ] - add sound effects:
+    [ ] - credit earned
+    [ ] - resource earned
+    [ ] - launch
+    [ ] - stop
+[ ] - break out scss
 [ ] - base random num for sprite on num of sprites
 [ ] - add login and db save
-
-    [ ] - show instructions modal on first load, then a 'next' button linking to create ship screen- validate
-    that form- if fleet.length !=0 only render the close button not 'next' button
-    
-    [ ] - add switching animations/ colors (maybe use React TransitionGroup)
 [ ] - add thrust exhaust when ship flies
 [ ] - add defense upgrade
  [ ] - add random events
@@ -18,7 +24,6 @@ to do:
 
 [ ] - style buttons
 [ ] - add fonts
-[ ] - add sound effect for start/stop/leveling
 
 done: 
 [x] - refactor for multiple ships
@@ -51,9 +56,7 @@ done:
 next version:
 [ ] - pick planets to deploy to based on resources
 [ ] - power ups can be purchased
-[ ] - 
-[ ] - more declarative animations 
-[ ] - logarithmic leveling
+[ ] - mobile styling
 [ ] - add in random events
 
 
