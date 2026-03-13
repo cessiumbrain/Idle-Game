@@ -1,19 +1,9 @@
 the MVP is to be able to create and switch between multiple ships
 
 to do:
-[x] - add flyin/out animation
-[x] - add sprites to classes utility
-[x] - restyle fleet div
-[x] - commit and merge
-
 [ ] - introduce tests
 [ ] - introduce error handling
-[ ] - deploy then switch to github issues and projects
-[ ] - add sound effects:
-    [ ] - credit earned
-    [ ] - resource earned
-    [ ] - launch
-    [ ] - stop
+
 [ ] - break out scss
 [ ] - base random num for sprite on num of sprites
 [ ] - add login and db save
@@ -21,11 +11,16 @@ to do:
 [ ] - add defense upgrade
  [ ] - add random events
 [ ] - add initial modal logic
-
 [ ] - style buttons
 [ ] - add fonts
 
 done: 
+[x] - deploy then switch to github issues and projects
+[x] - add sound effects:
+[x] - add flyin/out animation
+[x] - add sprites to classes utility
+[x] - restyle fleet div
+[x] - commit and merge
 [x] - refactor for multiple ships
     [x] - set up fleet display modal
     [x] - set current ship as a reference ID number

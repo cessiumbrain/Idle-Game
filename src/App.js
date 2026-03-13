@@ -237,6 +237,10 @@ function App() {
       setShipAnimation('fly-in')
       setCurrentShipID(shipID)
     }, 3000)
+    //setTimeout to reset animation state after fly-in
+    setTimeout(()=>{
+      setShipAnimation('')
+    },6000)
 
   }
   

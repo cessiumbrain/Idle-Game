@@ -1,6 +1,6 @@
 # Idle Game
 Idle Game is designed to reward the user for tasks that may not be as inherently rewarding as you'd like them to be.  It is also designed as a task timer to keep track of cumulative hours devoted to accomplishing specific tasks like learning or practicing skills.  
-    Users accumulate resources at set intervals based on what type of ship
+    Users accumulate resources and credits at set intervals based on what type of ship.  The user may then use credits to upgrade the mining equipment of the ship.
 
 | Ship Class | Activity Type | Description |
 |---|---|---|
