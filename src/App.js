@@ -4,6 +4,8 @@ import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import FleetModal from './FleetModal';
 import CreateShipModal from './CreateShipModal';
+import SolarSystemModal from './SolarSystemModal';
+import InfoModal from './InfoModal'
 import { shipClasses } from './config';
 import ship from './assets/ship_1/_0000_Layer-1.png'
 import launch from './assets/sounds/launch.mp3'
@@ -16,38 +18,20 @@ function App() {
   const [isRunning, setIsRunning] = useState(false)
   const [shipFrameNumber, setShipFrameNumber] = useState(0)
   const [messages, setMessages] = useState([])
-  const [playerData, setPlayerData] = useState({
-    fleet:[
-    //   {
-    //   totalTime: 0,
-    //   shipName: "test n",
-    //   shipActivity: "test a",
-    //   shipClass: "test c",
-    //   shipID: 1,
-    //   resourceUnits: {
-    //     iron: 0,
-    //     bronze: 0,
-    //     silver: 0,
-    //     gold: 0,
-    //   },
-    //   miningLevels: {
-    //     iron: 1,
-    //     bronze: 1,
-    //     silver: 1,
-    //     gold: 1
-    //   },
-    //   currentCredits: 0
-    // }
-  ],
+  const [playerData, setPlayerData] = useState(
+    {
+    fleet:[],
+    events: []
   }
   )
   const [showInstructionsModal, setShowInstructionsModal] = useState(false)
   const [showFleetModal, setShowFleetModal] = useState(false)
+  const [showInfoModal, setShowInfoModal] = useState(false)
   const [showCreateShipModal, setShowCreateShipModal] = useState(false)
   const [hasSaveFile, setHasSaveFile] = useState(false)
   const [currentShipID, setCurrentShipID] = useState(null)
   const [shipAnimation, setShipAnimation] = useState('')
-
+  const [showSolarSystemModal, setShowSolarSystemModal] = useState(false)
 
   const frameIntervalRef = useRef(null)
   const timerIntervalRef = useRef(null)
@@ -246,15 +230,19 @@ function App() {
   
   return (
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
-      <i className="info-icon fa-solid fa-info" onClick={()=>setShowFleetModal(true)}></i>
+      <i className="info-icon fa-solid fa-info" onClick={()=>setShowInfoModal(true)}></i>
       <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
       <i className="add-ship-icon fa-solid fa-plus" onClick={()=>{setShowCreateShipModal(true)}}></i>
+      {showInfoModal && <InfoModal setShowInfoModal={setShowInfoModal}setShowSolarSystemModal={setShowSolarSystemModal}setShowFleetModal={setShowFleetModal}></InfoModal>}
+
+      {showSolarSystemModal && <SolarSystemModal totalTime={currentShip.totalTime} currentShip={currentShip} setShowSolarSystemModal={setShowSolarSystemModal}></SolarSystemModal>}
 
       {showInstructionsModal && <InstructionsModal currentShip={currentShip} changeShip={changeShip} hasSaveFile={hasSaveFile} setPlayerData={setPlayerData} playerData={playerData} setShowModal={setShowInstructionsModal} ></InstructionsModal>}
 
       {showFleetModal && <FleetModal isRunning={isRunning} cycleTimer={cycleTimer} setCurrentShipID={setCurrentShipID} currentShipID={currentShipID} fleet={playerData.fleet} setShowFleetModal={setShowFleetModal}></FleetModal>}
 
       {showCreateShipModal && <CreateShipModal createNewShip={createNewShip}setShowCreateShipModal={setShowCreateShipModal}></CreateShipModal>}
+
       <div className="credits-display">Credits: {currentShip ? currentShip.currentCredits :''}</div>
       <div className={`ship-animation`} >
         <img className={`ship ${isRunning ? 'flying' : 'stationary'} ${shipAnimation}`} src={frames[shipFrameNumber] || ship}/>
