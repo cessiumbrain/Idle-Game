@@ -5,8 +5,9 @@ import { useEffect, useState, useRef } from 'react';
 import FleetModal from './FleetModal';
 import CreateShipModal from './CreateShipModal';
 import SolarSystemModal from './SolarSystemModal';
-import InfoModal from './InfoModal'
-import { shipClasses } from './config';
+import InfoModal from './InfoModal';
+import EventModal from './EventModal';
+import { shipClasses, createNewShip, createNewEvent } from './config';
 import ship from './assets/ship_1/_0000_Layer-1.png'
 import launch from './assets/sounds/launch.mp3'
 import stopAudio from './assets/sounds/stop.wav'
@@ -21,7 +22,6 @@ function App() {
   const [playerData, setPlayerData] = useState(
     {
     fleet:[],
-    events: []
   }
   )
   const [showInstructionsModal, setShowInstructionsModal] = useState(false)
@@ -32,6 +32,7 @@ function App() {
   const [currentShipID, setCurrentShipID] = useState(null)
   const [shipAnimation, setShipAnimation] = useState('')
   const [showSolarSystemModal, setShowSolarSystemModal] = useState(false)
+  const [showEventModal, setShowEventModal] = useState(false)
 
   const frameIntervalRef = useRef(null)
   const timerIntervalRef = useRef(null)
@@ -178,32 +179,15 @@ function App() {
   }
 
   //create new ship
-  function createNewShip(shipName, shipActivity, shipClass){
+  function handleCreateNewShip(shipName, shipActivity, shipClass){
+    console.log('create new ship')
     //stop the timer if it's running
     if(isRunning){
       cycleTimer()
     }
     //create a new ship object and add it to the fleet array
-    const newShip = {
-      shipName: shipName,
-      shipActivity: shipActivity,
-      shipClass: shipClass,
-      shipID: crypto.randomUUID(),
-      totalTime: 0,
-      resourceUnits: {
-        iron: 0,
-        bronze: 0,
-        silver: 0,
-        gold: 0,
-      },
-      miningLevels: {
-        iron: 1,
-        bronze: 1,
-        silver: 1,
-        gold: 1
-      },
-      currentCredits: 0
-    }
+    const newShip = createNewShip(shipName, shipClass, shipActivity)
+    console.log(newShip)
 
     setPlayerData(prevData=>({
       ...prevData,
@@ -233,7 +217,9 @@ function App() {
       <i className="info-icon fa-solid fa-info" onClick={()=>setShowInfoModal(true)}></i>
       <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
       <i className="add-ship-icon fa-solid fa-plus" onClick={()=>{setShowCreateShipModal(true)}}></i>
-      {showInfoModal && <InfoModal setShowInfoModal={setShowInfoModal}setShowSolarSystemModal={setShowSolarSystemModal}setShowFleetModal={setShowFleetModal}></InfoModal>}
+      <i class="event-icon fa-solid fa-exclamation" onClick={()=>{setShowEventModal(!showEventModal)}}></i>
+      <i class="fa-solid fa-clover" onClick={()=>{createNewEvent(setPlayerData, currentShip)}}></i>
+      {showInfoModal && <InfoModal currentShip={currentShip} setShowInfoModal={setShowInfoModal}setShowSolarSystemModal={setShowSolarSystemModal}setShowFleetModal={setShowFleetModal}></InfoModal>}
 
       {showSolarSystemModal && <SolarSystemModal totalTime={currentShip.totalTime} currentShip={currentShip} setShowSolarSystemModal={setShowSolarSystemModal}></SolarSystemModal>}
 
@@ -241,7 +227,9 @@ function App() {
 
       {showFleetModal && <FleetModal isRunning={isRunning} cycleTimer={cycleTimer} setCurrentShipID={setCurrentShipID} currentShipID={currentShipID} fleet={playerData.fleet} setShowFleetModal={setShowFleetModal}></FleetModal>}
 
-      {showCreateShipModal && <CreateShipModal createNewShip={createNewShip}setShowCreateShipModal={setShowCreateShipModal}></CreateShipModal>}
+      {showCreateShipModal && <CreateShipModal handleCreateNewShip={handleCreateNewShip}setShowCreateShipModal={setShowCreateShipModal}></CreateShipModal>}
+
+      {showEventModal && <EventModal setShowEventModal={setShowEventModal} events={currentShip.shipEventQueue} currentShip={currentShip}></EventModal>}
 
       <div className="credits-display">Credits: {currentShip ? currentShip.currentCredits :''}</div>
       <div className={`ship-animation`} >

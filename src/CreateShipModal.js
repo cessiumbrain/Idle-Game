@@ -15,7 +15,7 @@ function CreateShipModal(props){
         if(shipName && shipActivity && shipClass){
             console.log('valid form')
             props.setShowCreateShipModal(false)
-            props.createNewShip(shipName, shipActivity, shipClass)
+            props.hnaldeCreateNewShip(shipName, shipActivity, shipClass)
         } else {
             setError("please fill out all fields")
         }

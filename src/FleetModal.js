@@ -1,7 +1,7 @@
 function FleetModal(props){
     return(
         <div className="fleet-modal">
-            <h1>Fleet Modal</h1>
+            <h1>Fleet Info</h1>
             <div className="ships-list">
                 <div className="ship-info-header">
                     <span>Ship Name</span>

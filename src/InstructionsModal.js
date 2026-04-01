@@ -8,6 +8,7 @@ function InstructionsModal(props){
     const [errorMessage, setErrorMessage] = useState('')
 
   function handleCloseModal(){
+    console.log('handleCloseModal')
     //if there's already a save file and the config form isn't needed- just close the form
     if(props.currentShip){
         props.setShowModal(false)
@@ -21,6 +22,7 @@ function InstructionsModal(props){
     } else {
         //if valid
     props.setShowModal(false)
+
     const newShipData= createNewShip(shipName, shipClass, shipActivity)
     props.setPlayerData(prevData=>({
       ...prevData,

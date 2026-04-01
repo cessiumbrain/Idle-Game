@@ -27,6 +27,8 @@ import planetEight from './assets/solar-systems/Planet 8.png'
 import planetNine from './assets/solar-systems/Planet 9.png'
 import planetTen from './assets/solar-systems/Planet 10.png'
 
+import debris from './assets/game-events/debris.png'
+
 
 export const shipClasses = [
     {
@@ -34,142 +36,142 @@ export const shipClasses = [
         description: 'for daily maintenance tasks, rewards are quicker',
         sprites: [ship10, ship11, ship12, ship13, ship14],
         solarSystem: {
-    name: 'Demeter System',
-    planets: [
-        {
-            name: 'Focis', // Hearth
-            distanceInHours: 10,
-            widthPct: .05,
-            image: planetOne || planetOne
-        },
-        {
-            name: 'Colere', // Cultivate
-            distanceInHours: 20,
-            widthPct: .06,
-            image: planetTwo 
-        },
-        {
-            name: 'Horreum', // Granary
-            distanceInHours: 30,
-            widthPct: .07,
-            image: planetThree
-        },
-        {
-            name: 'Messis', // Harvest
-            distanceInHours: 40,
-            widthPct: .1,
-            image: planetFour
-        },
-        {
-            name: 'Salus', // Health
-            distanceInHours: 50,
-            widthPct: .09,
-            image: planetFive
-        },
-        {
-            name: 'Divitiae', // Wealth
-            distanceInHours: 60,
-            widthPct: .05,
-            image: planetSix
-        },
-        {
-            name: 'Sapientia', // Wisdom
-            distanceInHours: 70,
-            widthPct: .06,
-            image: planetSeven
-        },
-        {
-            name: 'Amicitia', // Friendship (fixed spelling)
-            distanceInHours: 80,
-            widthPct: .1,
-            image: planetEight
-        },
-        {
-            name: 'Sudor', // Sweat
-            distanceInHours: 90,
-            widthPct: .08,
-            image: planetNine
-        },
-        {
-            name: 'Laboro', // Toil
-            distanceInHours: 100,
-            widthPct: .05,
-            image: planetTen
+            name: 'Demeter System',
+            planets: [
+                {
+                    name: 'Focis', // Hearth
+                    distanceInHours: 10,
+                    widthPct: .05,
+                    image: planetOne || planetOne
+                },
+                {
+                    name: 'Colere', // Cultivate
+                    distanceInHours: 20,
+                    widthPct: .06,
+                    image: planetTwo
+                },
+                {
+                    name: 'Horreum', // Granary
+                    distanceInHours: 30,
+                    widthPct: .07,
+                    image: planetThree
+                },
+                {
+                    name: 'Messis', // Harvest
+                    distanceInHours: 40,
+                    widthPct: .1,
+                    image: planetFour
+                },
+                {
+                    name: 'Salus', // Health
+                    distanceInHours: 50,
+                    widthPct: .09,
+                    image: planetFive
+                },
+                {
+                    name: 'Divitiae', // Wealth
+                    distanceInHours: 60,
+                    widthPct: .05,
+                    image: planetSix
+                },
+                {
+                    name: 'Sapientia', // Wisdom
+                    distanceInHours: 70,
+                    widthPct: .06,
+                    image: planetSeven
+                },
+                {
+                    name: 'Amicitia', // Friendship (fixed spelling)
+                    distanceInHours: 80,
+                    widthPct: .1,
+                    image: planetEight
+                },
+                {
+                    name: 'Sudor', // Sweat
+                    distanceInHours: 90,
+                    widthPct: .08,
+                    image: planetNine
+                },
+                {
+                    name: 'Laboro', // Toil
+                    distanceInHours: 100,
+                    widthPct: .05,
+                    image: planetTen
+                }
+            ],
+            totalDistanceInHours: 100
         }
-    ],
-    totalDistanceInHours: 100
-}
     },
     {
         name: 'Research',
         description: 'for personal growth tasks, rewards are spaced further apart',
         sprites: [ship20, ship21, ship22, ship23, ship24],
         solarSystem: {
-    name: 'Athena System',
-    planets: [
-        {
-            name: 'Curiositas', // Curiosity (the spark)
-            distanceInHours: 10,
-            widthPct: .005,
-            image: planetOne
-        },
-        {
-            name: 'Discipulus', // Student / learner
-            distanceInHours: 50,
-            widthPct: .002,
-            image: planetTwo
-        },
-        {
-            name: 'Studium', // Study / focused effort
-            distanceInHours: 150,
-            widthPct: .005,
-            image: planetThree
-        },
-        {
-            name: 'Ratio', // Reason / understanding systems
-            distanceInHours: 400,
-            widthPct: .03,
-            image: planetFour
-        },
-        {
-            name: 'Ars', // Craft / applied skill
-            distanceInHours: 1000,
-            widthPct: .05,
-            image: planetFive
-        },
-        {
-            name: 'Disciplina', // Discipline / consistency
-            distanceInHours: 2500,
-            widthPct: .07,
-            image: planetSix
-        },
-        {
-            name: 'Perceptio', // Perception / pattern recognition
-            distanceInHours: 4000,
-            widthPct: .08,
-            image: planetSeven
-        },
-        {
-            name: 'Sapientia', // Wisdom
-            distanceInHours: 6000,
-            widthPct: .09,
-            image: planetEight
-        },
-        {
-            name: 'Illuminatio', // Illumination / deep insight
-            distanceInHours: 8000,
-            widthPct: .1,
-            image: planetNine
-        },
-        {
-            name: 'Aeternitas', // Timeless mastery / legacy
-            distanceInHours: 10000,
-            widthPct: .1,
-            image: planetTen
+            name: 'Athena System',
+            planets: [
+                {
+                    name: 'Curiositas', // Curiosity (the spark)
+                    distanceInHours: 10,
+                    widthPct: .005,
+                    image: planetOne
+                },
+                {
+                    name: 'Discipulus', // Student / learner
+                    distanceInHours: 50,
+                    widthPct: .002,
+                    image: planetTwo
+                },
+                {
+                    name: 'Studium', // Study / focused effort
+                    distanceInHours: 150,
+                    widthPct: .005,
+                    image: planetThree
+                },
+                {
+                    name: 'Ratio', // Reason / understanding systems
+                    distanceInHours: 400,
+                    widthPct: .03,
+                    image: planetFour
+                },
+                {
+                    name: 'Ars', // Craft / applied skill
+                    distanceInHours: 1000,
+                    widthPct: .05,
+                    image: planetFive
+                },
+                {
+                    name: 'Disciplina', // Discipline / consistency
+                    distanceInHours: 2500,
+                    widthPct: .07,
+                    image: planetSix
+                },
+                {
+                    name: 'Perceptio', // Perception / pattern recognition
+                    distanceInHours: 4000,
+                    widthPct: .08,
+                    image: planetSeven
+                },
+                {
+                    name: 'Sapientia', // Wisdom
+                    distanceInHours: 6000,
+                    widthPct: .09,
+                    image: planetEight
+                },
+                {
+                    name: 'Illuminatio', // Illumination / deep insight
+                    distanceInHours: 8000,
+                    widthPct: .1,
+                    image: planetNine
+                },
+                {
+                    name: 'Aeternitas', // Timeless mastery / legacy
+                    distanceInHours: 10000,
+                    widthPct: .1,
+                    image: planetTen
+                }
+            ],
+            totalDistanceInHours: 10000
         }
-    ],
-        totalDistanceInHours: 10000
-}
     },
     {
         name: 'Vanguard',
@@ -250,22 +252,27 @@ export const baseRates = {
         iron: .1,
         bronze: 0.03,
         silver: 0.01,
-        gold: 0.005
+        gold: 0.005,
+        aetherium: .0001
     },
     Utility: {
-        iron:   0.16,
+        iron: 0.16,
         bronze: 0.045,
         silver: 0.006,
-        gold:   0.002,
-        
+        gold: 0.002,
+        aetherium: .0001
+
+
     },
     Vanguard: {
-        iron:   0.06,
+        iron: 0.06,
         bronze: 0.025,
         silver: 0.02,
-        gold:   0.012
+        gold: 0.012,
+        aetherium: .0001,
+
     }
-    
+
 }
 
 export const secondsPerCredit = {
@@ -277,7 +284,7 @@ export const secondsPerCredit = {
 
 
 //
-export function calculateResources(currentShipData, baseRates){
+export function calculateResources(currentShipData, baseRates) {
 
     const newResourceUnits = {}
 
@@ -290,47 +297,127 @@ export function calculateResources(currentShipData, baseRates){
 
         const currentLevel = currentShipData.miningLevels[resource]
 
-        let newUnits = currentUnits + baseRate * currentLevel * (Math.log(currentLevel +1))
+        let newUnits = currentUnits + baseRate * currentLevel * (Math.log(currentLevel + 1))
         newResourceUnits[resource] = newUnits
     }
     return newResourceUnits
-    
+
 }
 
 export function createNewShip(shipName, shipClass, shipActivity) {
     return {
-      shipID: crypto.randomUUID(),
-      shipName: shipName,
-      shipActivity: shipActivity,
-      shipClass: shipClass,
-      totalTime: 0,
-      resourceUnits: {
-        iron: 0,
-        bronze: 0,
-        silver: 0,
-        gold: 0,
-      },
-      miningLevels: {
-        iron: 1,
-        bronze: 1,
-        silver: 1,
-        gold: 1
-      },
-      currentCredits: 0
-    }
-    
-  }
-
-export class GameEvent {
-    constructor(eventType, mineralPayload, creditPayload){
-        this.eventType = eventType
-        this.mineralPayload = mineralPayload
-        this.creditPayload = creditPayload
-        this.eventDispatched = false
+        shipID: crypto.randomUUID(),
+        shipEventQueue: [],
+        shipName: shipName,
+        shipActivity: shipActivity,
+        shipClass: shipClass,
+        totalTime: 0,
+        resourceUnits: {
+            iron: 0,
+            bronze: 0,
+            silver: 0,
+            gold: 0,
+            aetherium: 0
+        },
+        miningLevels: {
+            iron: 1,
+            bronze: 1,
+            silver: 1,
+            gold: 1,
+            aetherium: 1
+        },
+        currentCredits: 0
     }
 
-    dispatchEvent(stateSetterFn){
+}
 
+export function createNewEvent(setPlayerState, currentShip) {
+    setPlayerState(prevState => {
+        return {
+            ...prevState,
+            fleet: prevState.fleet.map(ship => {
+                if (ship.shipID === currentShip.shipID) {
+                    return {
+                        ...ship,
+                        shipEventQueue: [...ship.shipEventQueue, new SpaceDebris()]
+                    }
+                } else {
+                    return ship
+                }
+            })
+
+        }
+    })
+    console.log('create new event')
+    const randomEvent = new SpaceDebris()
+}
+
+const EventStatus = Object.freeze({
+  
+  QUEUED: "queued",
+    INPUT: "input",
+  RESULT: "result",
+  COMPLETED: "completed"
+});
+
+class GameEvent {
+
+}
+class SpaceDebris {
+    constructor() {
+        this.payload = null
+        this.eventType = 'space-debris'
+        this.eventStatus = EventStatus.QUEUED
+        this.eventImage = debris
+        this.eventTextOptions = ["You encounter a mysterious piece of debris floating in space.","A mysterious piece of abandoned cargo blocks your ship's path"]
+        this.eventText = this.eventTextOptions[Math.floor(Math.random() * this.eventTextOptions.length)]
+        this.playerInputChoices = [{
+            inputId: 1,
+            inputText: 'Open airlock and take on cargo'
+        },
+        {
+            inputId: 2,
+            inputText: 'Ignore object and continue flying'
+        }]
+        this.outputText = null
+    }
+    dispatchEvent() {
+
+    }
+    eventLogic(playerInput, shipState, stateSetter) {
+        console.log(playerInput)
+
+        //if the player chooses to interact with the debris
+        if (playerInput.inputId === 1) {
+            //odds are 50/50 plus a luck bonus based on aetherium mining level
+            const primaryRandomNum = Math.random() * 1000
+            // Luck bonus approaches 200 as aetherium increases, but never reaches it
+            const aetherium = shipState.resourceUnits.aetherium || 0
+            const luckBonus = 200 * (1 - Math.exp(-aetherium / 1000))
+
+            if (primaryRandomNum < 500 + luckBonus) {
+
+                // success event
+                this.outputText = 'You found something valuable in the debris!'
+            }
+            else {
+                const secondaryRandomNum = Math.random() * 1000 + luckBonus
+                if (secondaryRandomNum < 700) {
+                    const basePct = Math.random() * 0.1; // up to 10%
+                    const luckReduction = Math.min(shipState.resourceUnits.aetherium / 100, 0.99); // up to 99%
+                    const finalPct = basePct * (1 - luckReduction);
+
+                    // minor failure event
+                    this.outputText = 'The debris explodes in the airlock damaging your ship and costing you'
+                } else {
+
+                    // failure event
+                    this.outputText = 'The debris was empty.'
+                }
+            }
+        } else if (playerInput.inputId === 2) {
+            this.outputText = "You safely avoid the debris."
+        }
     }
 
 }
