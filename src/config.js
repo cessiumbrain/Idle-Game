@@ -32,7 +32,7 @@ import silentShip from './assets/factions/the_silent/silent_ship.png'
 import unboundShip from './assets/factions/the_unbound/unbound_ship.png'
 
 import debris from './assets/game-events/debris.png'
-
+import event from './assets/sounds/event.wav'
 
 export const shipClasses = [
     {
@@ -336,9 +336,9 @@ export function createNewShip(shipName, shipClass, shipActivity) {
 }
 
 export function createNewEvent(setPlayerState, currentShip) {
-    //testing faction encounters-------------------------!!!!!!!!
-    // const randomEvent = new eventClasses[Math.floor(Math.random() * eventClasses.length)]()
-    const randomEvent = new FactionEncounter()
+    new Audio(event).play()
+    const randomEvent = new eventClasses[Math.floor(Math.random() * eventClasses.length)]()
+
     setPlayerState(prevState => {
         return {
             ...prevState,
@@ -357,19 +357,22 @@ export function createNewEvent(setPlayerState, currentShip) {
     })
 }
 
-const factionsArray =[
+export const factionsArray =[
     {
         name: 'The Unbound',
+        id: crypto.randomUUID(),
         shipImage: unboundShip,
         description: 'Chaotic and undisciplined, they are driven by their basest impulses.  They are a race of lost creatures consumed by darkness.'
     },
     {
         name: 'The Dominion',
+        id: crypto.randomUUID(),
         shipImage: dominionShip,
         description: 'A highly officious and bureaucratic regime, they are obsessed with order and control.'
     },
     {
         name: 'The Silent',
+        id: crypto.randomUUID(),
         shipImage: silentShip,
         description: 'A mysterious and enigmatic race, their intentions are inscrutable to humans.'
     }
@@ -527,16 +530,18 @@ export const EventHandlers = {
 
     },
     'faction encounter': function (playerInputId, eventObject, currentShip, playerData) {
-        console.log('faction encounter event handler')
-        console.log('eventObject', eventObject)
         let updatedEvent = { ...eventObject }
         let updatedShip = { ...currentShip }
         let updatedPlayerData = { ...playerData }
 
         updatedEvent.eventStatus = EventStatus.RESULT
 
+        const randomRoll = Math.random()
+        const luckBonus = 0.2 * (1 - Math.exp(-currentShip.resourceUnits.aetherium / 50))
+
         if (eventObject.eventSubtype.type === 'friendly') {
             const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'increase', .01, .2)
+
             updatedEvent.outputText = `The emissary rewards you for your kindness with a gift of resources. You gain: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
             updatedShip.resourceUnits = newResourceObject
 
@@ -544,21 +549,29 @@ export const EventHandlers = {
         else if (eventObject.eventSubtype.type === 'neutral') {
             //if the player tries to bribe
             if (playerInputId === 1) {
-                console.log('player input 1')
-                console.log('updatedEvent', updatedEvent)
                 const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'decrease', .01, .05)
                 updatedEvent.outputText = `Your gesture of goodwill is well received. You gave: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}. ${eventObject.faction.name} allows you to pass unharmed.`
                 updatedShip.resourceUnits = newResourceObject
             }
             //fire on the ship
-            else if (playerInputId===2){
-
+            else if (playerInputId === 2) {
+                //bad outcome
+                if (randomRoll > 0.5 + luckBonus) {
+                    const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'decrease', .05, .2)
+                    updatedEvent.outputText = `Your attack provokes a fierce retaliation. The ${eventObject.faction.name} ship is heavily armed and easily outmatches you. You lose: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+                    updatedShip.resourceUnits = newResourceObject
+                } 
+                //good outcome
+                else {
+                    const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'increase', .01, .1)
+                    updatedEvent.outputText = `Your attack is successful. You gain: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+                    updatedShip.resourceUnits = newResourceObject
+                }
             }
             //if the player decides to ignore
             else if (playerInputId === 3) {
                 console.log('playerInputId 3')
-                const randomRoll = Math.random()
-                const luckBonus = 0.2 * (1 - Math.exp(-currentShip.resourceUnits.aetherium / 50))
+
                 //bad outcome
                 if (randomRoll > 0.7 + luckBonus) {
                     const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'decrease', .05, .2)
@@ -567,21 +580,36 @@ export const EventHandlers = {
                     updatedShip.resourceUnits = newResourceObject
 
                 }
+                //good outcome
                 if (randomRoll < 0.3 + luckBonus) {
 
                     const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'increase', .01, .1)
                     updatedEvent.outputText = `The ${eventObject.faction.name} perceives your inaction as a sign of strength. They decide to leave you alone and even reward you for your confidence. You gain: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
                     updatedShip.resourceUnits = newResourceObject
-                } else {
-
+                } 
+                //neutral outcome
+                else {
                     updatedEvent.outputText = `The ${eventObject.faction.name} perceives your inaction as a sign of weakness. They decide to intimidate you but ultimately leave you alone. You feel shaken but suffer no material losses.`
                 }
                 console.log('updatedEvent', updatedEvent)
             }
 
+        } else if (eventObject.eventSubtype.type === 'hostile') {
+            const randomRoll = Math.random()
+            const luckBonus = 0.2 * (1 - Math.exp(-currentShip.resourceUnits.aetherium / 50))
+            
+            if(randomRoll < 0.5 + luckBonus){
+                const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'increase', .01, .1)
+                updatedEvent.outputText = `Against all odds, you successfully defend against the attackers and even manage to turn the tables on them. You gain: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+                updatedShip.resourceUnits = newResourceObject
+            } else {
+                const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'decrease', .05, .2)
+                updatedEvent.outputText = `The attackers easily overpower you. Your ship is damaged and the attackers steal from your resources. You lose: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+                updatedShip.resourceUnits = newResourceObject
+            }
         }
 
-                return { updatedEvent, updatedShip, updatedPlayerData }
+        return { updatedEvent, updatedShip, updatedPlayerData }
 
     }
 }

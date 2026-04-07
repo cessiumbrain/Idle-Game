@@ -11,6 +11,7 @@ import { shipClasses, createNewShip, createNewEvent } from './config';
 import ship from './assets/ship_1/_0000_Layer-1.png'
 import launch from './assets/sounds/launch.mp3'
 import stopAudio from './assets/sounds/stop.wav'
+import factionsArray from './config'
 
 
 import {calculateResources, baseRates, secondsPerCredit} from './config'
@@ -25,7 +26,7 @@ function App() {
   const [playerData, setPlayerData] = useState(
     {
     fleet:[],
-  }
+    }
   )
   const [showInstructionsModal, setShowInstructionsModal] = useState(false)
   const [showFleetModal, setShowFleetModal] = useState(false)
@@ -71,6 +72,23 @@ function App() {
     //increment total time by 1
     //add a credit if the elapsed time is a multiple of secondsPerCredit
     calculateResources(playerData, baseRates)
+
+    // Random event trigger based on ship class
+    if (currentShip) {
+      const eventIntervals = {
+        Vanguard: 30,
+        Utility: 300,
+        Research: 600
+      };
+
+      const interval = eventIntervals[currentShip.shipClass] || 60;
+      
+      const randomNum = Math.random()
+
+      if (Math.random() < 1 / interval) {
+        createNewEvent(setPlayerData, currentShip);
+      }
+    }
 
     
     setPlayerData(prevData => ({
@@ -219,12 +237,21 @@ function App() {
     <PlayerDataContext.Provider value={{playerData, setPlayerData}}>
     <CurrentShipContext.Provider value={currentShip}>
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
-      <i className="info-icon fa-solid fa-info" onClick={()=>setShowInfoModal(true)}></i>
-      <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
-      <i className="add-ship-icon fa-solid fa-plus" onClick={()=>{setShowCreateShipModal(true)}}></i>
-      <i class="event-icon fa-solid fa-exclamation" onClick={()=>{setShowEventModal(!showEventModal)}}></i>
-      <i class="fa-solid fa-clover" onClick={()=>{createNewEvent(setPlayerData, currentShip)}}></i>
-      {showInfoModal && <InfoModal currentShip={currentShip} setShowInfoModal={setShowInfoModal}setShowSolarSystemModal={setShowSolarSystemModal}setShowFleetModal={setShowFleetModal}></InfoModal>}
+      <i className="info-icon fa-solid fa-info" title="fleet info" onClick={()=>{
+        if(!currentShip){
+          return
+        }
+        setShowInfoModal(true)
+        }}></i>
+      <i className="instructions-icon fa-solid fa-question" title="instructions"onClick={()=>setShowInstructionsModal(true)}></i>
+      <i className="add-ship-icon fa-solid fa-plus" title="add ship"onClick={()=>{setShowCreateShipModal(true)}}></i>
+      <i class="event-icon fa-solid fa-exclamation" title="events" onClick={()=>{
+      if(!currentShip){
+        return
+      }
+      setShowEventModal(!showEventModal)}
+    }></i>
+      {showInfoModal && <InfoModal setShowEventModal={setShowEventModal} currentShip={currentShip} setShowInfoModal={setShowInfoModal}setShowSolarSystemModal={setShowSolarSystemModal}setShowFleetModal={setShowFleetModal}></InfoModal>}
 
       {showSolarSystemModal && <SolarSystemModal totalTime={currentShip.totalTime} currentShip={currentShip} setShowSolarSystemModal={setShowSolarSystemModal}></SolarSystemModal>}
 

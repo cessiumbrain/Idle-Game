@@ -1,1 +1,1 @@
-- finish event logic for space debris then faction encounters
+- all events are finished - wire up events to game loop
