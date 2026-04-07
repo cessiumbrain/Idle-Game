@@ -244,13 +244,16 @@ $star-shadows: ();
       width: 10px;
       height: 10px;
       }
-      .event-display {
+      .event-input-display, .event-result-display {
         display: flex;
         flex-direction: column;
         align-items:center;
         justify-content: center;
 
         .event-choice-row{
+          button {
+            flex: 1
+          }          
           display: flex;
           justify-content: space-around;
         }
@@ -271,6 +274,9 @@ $star-shadows: ();
       }
       .space-debris{
         animation: float 4s infinite;
+      }
+      .faction {
+        animation: float 4s  infinite ;
       }
       .events-list{
         display: grid;

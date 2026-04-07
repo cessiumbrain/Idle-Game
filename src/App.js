@@ -1,7 +1,7 @@
 import ResourceDisplay from './ResourceDisplay';
 import InstructionsModal from './InstructionsModal';
 import './App.css';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, createContext } from 'react';
 import FleetModal from './FleetModal';
 import CreateShipModal from './CreateShipModal';
 import SolarSystemModal from './SolarSystemModal';
@@ -14,6 +14,9 @@ import stopAudio from './assets/sounds/stop.wav'
 
 
 import {calculateResources, baseRates, secondsPerCredit} from './config'
+
+export const PlayerDataContext = createContext()
+export const CurrentShipContext = createContext()
 
 function App() {
   const [isRunning, setIsRunning] = useState(false)
@@ -213,6 +216,8 @@ function App() {
   }
   
   return (
+    <PlayerDataContext.Provider value={{playerData, setPlayerData}}>
+    <CurrentShipContext.Provider value={currentShip}>
     <div className={`App ${isRunning ? 'flying' : 'stationary'}`}>
       <i className="info-icon fa-solid fa-info" onClick={()=>setShowInfoModal(true)}></i>
       <i className="instructions-icon fa-solid fa-question" onClick={()=>setShowInstructionsModal(true)}></i>
@@ -271,6 +276,8 @@ function App() {
       {messages ?  <Messages messages={messages}></Messages> : null}
 
     </div>
+    </CurrentShipContext.Provider>
+    </PlayerDataContext.Provider>
   );
 }
 

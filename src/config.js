@@ -27,6 +27,10 @@ import planetEight from './assets/solar-systems/Planet 8.png'
 import planetNine from './assets/solar-systems/Planet 9.png'
 import planetTen from './assets/solar-systems/Planet 10.png'
 
+import dominionShip from './assets/factions/the_dominion/dominion_ship.png'
+import silentShip from './assets/factions/the_silent/silent_ship.png'
+import unboundShip from './assets/factions/the_unbound/unbound_ship.png'
+
 import debris from './assets/game-events/debris.png'
 
 
@@ -276,8 +280,8 @@ export const baseRates = {
 }
 
 export const secondsPerCredit = {
-    Research: 5,
-    Utility: 5,
+    Research: 60,
+    Utility: 30,
     Vanguard: 5
 
 }
@@ -332,6 +336,9 @@ export function createNewShip(shipName, shipClass, shipActivity) {
 }
 
 export function createNewEvent(setPlayerState, currentShip) {
+    //testing faction encounters-------------------------!!!!!!!!
+    // const randomEvent = new eventClasses[Math.floor(Math.random() * eventClasses.length)]()
+    const randomEvent = new FactionEncounter()
     setPlayerState(prevState => {
         return {
             ...prevState,
@@ -339,7 +346,7 @@ export function createNewEvent(setPlayerState, currentShip) {
                 if (ship.shipID === currentShip.shipID) {
                     return {
                         ...ship,
-                        shipEventQueue: [...ship.shipEventQueue, new SpaceDebris()]
+                        shipEventQueue: [...ship.shipEventQueue, randomEvent]
                     }
                 } else {
                     return ship
@@ -348,25 +355,38 @@ export function createNewEvent(setPlayerState, currentShip) {
 
         }
     })
-    console.log('create new event')
-    const randomEvent = new SpaceDebris()
 }
 
-const EventStatus = Object.freeze({
-  
-  QUEUED: "queued",
+const factionsArray =[
+    {
+        name: 'The Unbound',
+        shipImage: unboundShip,
+        description: 'Chaotic and undisciplined, they are driven by their basest impulses.  They are a race of lost creatures consumed by darkness.'
+    },
+    {
+        name: 'The Dominion',
+        shipImage: dominionShip,
+        description: 'A highly officious and bureaucratic regime, they are obsessed with order and control.'
+    },
+    {
+        name: 'The Silent',
+        shipImage: silentShip,
+        description: 'A mysterious and enigmatic race, their intentions are inscrutable to humans.'
+    }
+]
+
+export const EventStatus = Object.freeze({
+    QUEUED: "queued",
     INPUT: "input",
-  RESULT: "result",
-  COMPLETED: "completed"
+    RESULT: "result",
+    COMPLETED: "completed"
 });
 
-class GameEvent {
-
-}
 class SpaceDebris {
     constructor() {
+        this.eventID = crypto.randomUUID()
         this.payload = null
-        this.eventType = 'space-debris'
+        this.eventType = 'space debris'
         this.eventStatus = EventStatus.QUEUED
         this.eventImage = debris
         this.eventTextOptions = ["You encounter a mysterious piece of debris floating in space.","A mysterious piece of abandoned cargo blocks your ship's path"]
@@ -381,43 +401,191 @@ class SpaceDebris {
         }]
         this.outputText = null
     }
-    dispatchEvent() {
-
-    }
-    eventLogic(playerInput, shipState, stateSetter) {
-        console.log(playerInput)
-
-        //if the player chooses to interact with the debris
-        if (playerInput.inputId === 1) {
-            //odds are 50/50 plus a luck bonus based on aetherium mining level
-            const primaryRandomNum = Math.random() * 1000
-            // Luck bonus approaches 200 as aetherium increases, but never reaches it
-            const aetherium = shipState.resourceUnits.aetherium || 0
-            const luckBonus = 200 * (1 - Math.exp(-aetherium / 1000))
-
-            if (primaryRandomNum < 500 + luckBonus) {
-
-                // success event
-                this.outputText = 'You found something valuable in the debris!'
-            }
-            else {
-                const secondaryRandomNum = Math.random() * 1000 + luckBonus
-                if (secondaryRandomNum < 700) {
-                    const basePct = Math.random() * 0.1; // up to 10%
-                    const luckReduction = Math.min(shipState.resourceUnits.aetherium / 100, 0.99); // up to 99%
-                    const finalPct = basePct * (1 - luckReduction);
-
-                    // minor failure event
-                    this.outputText = 'The debris explodes in the airlock damaging your ship and costing you'
-                } else {
-
-                    // failure event
-                    this.outputText = 'The debris was empty.'
-                }
-            }
-        } else if (playerInput.inputId === 2) {
-            this.outputText = "You safely avoid the debris."
-        }
-    }
 
 }
+
+class FactionEncounter {
+    constructor(){
+        this.faction = factionsArray[Math.floor(Math.random() * factionsArray.length)]
+        this.eventID = crypto.randomUUID()
+        this.eventType = 'faction encounter'
+        this.eventStatus = EventStatus.QUEUED
+        this.eventImage = this.faction.shipImage
+        this.eventSubtypes = [
+            {
+                type: 'friendly',
+                eventTextOptions: [`You encounter an emissary of ${this.faction.name}. They greet you warmly and offer you a gift as a token of goodwill.`],
+                playerInputChoices: [{
+                    inputId: 1,
+                    inputText: 'Accept the gift graciously'
+                }]
+            }, 
+            { 
+                type: 'neutral',
+                eventTextOptions: [`A mysterious ship bearing the insignia of ${this.faction.name} approaches your vessel.  Their intenions are unclear.`],
+                playerInputChoices:[{
+                    inputId: 1,
+                    inputText: 'Send a friendly supply drop to their ship as a gesture of goodwill. You may be deducted up to 5% of your resources.'
+                },{
+                    inputId: 2,
+                    inputText: 'Fire on the ship preemptively in an attempt to neutralize any potential threat.'
+                },
+                {
+                    inputId: 3,
+                    inputText: 'Take no action and wait on their next move.'
+                }]
+            }, 
+            { 
+                type: 'hostile',
+                eventTextOptions: [`You are ambushed by a ship from ${this.faction.name}.  They attack without warning forcing you to defend yourself.`],
+                playerInputChoices:[{
+                    inputId: 1,
+                    inputText: 'Defend your ship and retaliate against the attackers.'
+                }]
+            }]
+        this.eventSubtype = this.eventSubtypes[Math.floor(Math.random() * this.eventSubtypes.length)]
+        //determine the event subtype and set textOptions based on the subtype
+        this.eventText = this.eventSubtype.eventTextOptions[Math.floor(Math.random() * this.eventSubtype.eventTextOptions.length)]
+        this.playerInputChoices = this.eventSubtype.playerInputChoices
+    }
+}
+
+function modifyResources(resourceObject, mode, lowerLimit, upperLimit){
+    if(mode !== 'increase' && mode !== 'decrease'){
+        throw new Error("modifyResources helper function expected mode to be either 'increase' or 'decrease' instead got " + mode)
+    }
+    let newResourceObject = {}
+    let resourceDeltas = {}
+    Object.keys(resourceObject).forEach(resource=>{
+        //if random num is less than .5 the user doesn't get any resource change
+        if(Math.random()<.5){
+            newResourceObject[resource] = resourceObject[resource]
+            resourceDeltas[resource] = 0
+        } else {
+            const randomModifier = Math.random() * (upperLimit - lowerLimit) + lowerLimit
+            if(mode === 'increase'){
+                const unitsDelta = resourceObject[resource] * randomModifier
+                newResourceObject[resource] = resourceObject[resource] + unitsDelta
+                resourceDeltas[resource] = unitsDelta
+            } else if(mode === 'decrease'){
+                const unitsDelta = resourceObject[resource] * randomModifier
+                newResourceObject[resource] = resourceObject[resource] - unitsDelta
+                resourceDeltas[resource] = unitsDelta
+            }
+        }
+    })
+    return {newResourceObject, resourceDeltas}
+}
+export const EventHandlers = {
+    'space debris': function (playerInputId, eventObject, currentShip, playerData) {
+        let updatedEvent = { ...eventObject }
+        let updatedShip = { ...currentShip }
+        let updatedPlayerData = { ...playerData }
+
+        updatedEvent.eventStatus = EventStatus.RESULT
+        //player decides to take the debris
+        //luck bonus
+        const luckBonus = 0.2 * (1 - Math.exp(-currentShip.resourceUnits.aetherium / 50))
+        const randomRoll = Math.random()
+        if (playerInputId === 1) {
+            //good outcome
+            if (randomRoll < 0.5 + luckBonus) {
+                let gainedUnits = {}
+                //calculate gained resources based on current ship resources and luck bonus
+                Object.keys(currentShip.resourceUnits).forEach(resource => {
+                    gainedUnits[resource] = Math.random() * 0.1 * currentShip.resourceUnits[resource]
+                })
+                console.log(gainedUnits)
+                //update ship resources
+                Object.keys(currentShip.resourceUnits).forEach(resource => {
+                    updatedShip.resourceUnits[resource] = gainedUnits[resource] + currentShip.resourceUnits[resource]
+                })
+
+                updatedEvent.outputText = `You open the airlock and bring the debris inside to discover it contains a cache of resources containing: ${Object.keys(gainedUnits).map(resource => `${gainedUnits[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+            }
+            //bad outcome
+            else {
+                let lostUnits = {}
+                //calculate lost resources based on current ship resources and luck bonus
+                Object.keys(currentShip.resourceUnits).forEach(resource => {
+                    lostUnits[resource] = Math.random() * 0.1 * currentShip.resourceUnits[resource]
+                })
+                console.log(lostUnits)
+                //update ship resources
+                Object.keys(currentShip.resourceUnits).forEach(resource => {
+                    updatedShip.resourceUnits[resource] = currentShip.resourceUnits[resource] - lostUnits[resource]
+                })
+
+                updatedEvent.outputText = `You open the airlock and bring the debris inside, but it contained an unstable element that explodes. You lose: ${Object.keys(lostUnits).map(resource => `${lostUnits[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+            }
+        }
+        //player decides to ignore the debris
+        else if (playerInputId === 2) {
+            updatedEvent.outputText = 'You decide to play it safe and steer around the debris, leaving it behind as you continue on your journey'
+        }
+        return { updatedEvent, updatedShip, updatedPlayerData }
+
+    },
+    'faction encounter': function (playerInputId, eventObject, currentShip, playerData) {
+        console.log('faction encounter event handler')
+        console.log('eventObject', eventObject)
+        let updatedEvent = { ...eventObject }
+        let updatedShip = { ...currentShip }
+        let updatedPlayerData = { ...playerData }
+
+        updatedEvent.eventStatus = EventStatus.RESULT
+
+        if (eventObject.eventSubtype.type === 'friendly') {
+            const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'increase', .01, .2)
+            updatedEvent.outputText = `The emissary rewards you for your kindness with a gift of resources. You gain: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+            updatedShip.resourceUnits = newResourceObject
+
+        }
+        else if (eventObject.eventSubtype.type === 'neutral') {
+            //if the player tries to bribe
+            if (playerInputId === 1) {
+                console.log('player input 1')
+                console.log('updatedEvent', updatedEvent)
+                const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'decrease', .01, .05)
+                updatedEvent.outputText = `Your gesture of goodwill is well received. You gave: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}. ${eventObject.faction.name} allows you to pass unharmed.`
+                updatedShip.resourceUnits = newResourceObject
+            }
+            //fire on the ship
+            else if (playerInputId===2){
+
+            }
+            //if the player decides to ignore
+            else if (playerInputId === 3) {
+                console.log('playerInputId 3')
+                const randomRoll = Math.random()
+                const luckBonus = 0.2 * (1 - Math.exp(-currentShip.resourceUnits.aetherium / 50))
+                //bad outcome
+                if (randomRoll > 0.7 + luckBonus) {
+                    const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'decrease', .05, .2)
+
+                    updatedEvent.outputText = `The ${eventObject.faction.name} perceives your inaction as a hostile act. They attack your ship causing damage and stealing resources. You lost: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+                    updatedShip.resourceUnits = newResourceObject
+
+                }
+                if (randomRoll < 0.3 + luckBonus) {
+
+                    const { newResourceObject, resourceDeltas } = modifyResources(currentShip.resourceUnits, 'increase', .01, .1)
+                    updatedEvent.outputText = `The ${eventObject.faction.name} perceives your inaction as a sign of strength. They decide to leave you alone and even reward you for your confidence. You gain: ${Object.keys(resourceDeltas).map(resource => `${resourceDeltas[resource].toFixed(2)} units of ${resource}`).join(', ')}.`
+                    updatedShip.resourceUnits = newResourceObject
+                } else {
+
+                    updatedEvent.outputText = `The ${eventObject.faction.name} perceives your inaction as a sign of weakness. They decide to intimidate you but ultimately leave you alone. You feel shaken but suffer no material losses.`
+                }
+                console.log('updatedEvent', updatedEvent)
+            }
+
+        }
+
+                return { updatedEvent, updatedShip, updatedPlayerData }
+
+    }
+}
+
+const eventClasses = [SpaceDebris, FactionEncounter]
+
+
