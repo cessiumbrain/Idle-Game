@@ -12,6 +12,8 @@ import ship from './assets/ship_1/_0000_Layer-1.png'
 import launch from './assets/sounds/launch.mp3'
 import stopAudio from './assets/sounds/stop.wav'
 import factionsArray from './config'
+import gold from './assets/sounds/gold.mp3'
+import error from './assets/sounds/error.m4a'
 
 
 import {calculateResources, baseRates, secondsPerCredit} from './config'
@@ -155,12 +157,14 @@ function App() {
   function upgradeMiningLevel(resource){
     const currentShip = playerData.fleet.find(ship=>ship.shipID === currentShipID)
     if(currentShip.currentCredits === 0 ){
+      new Audio(error).play()
       setMessages(['ERROR: not enough credits'])
 
       setTimeout(()=>{
         setMessages(prevMessages=>prevMessages.slice(1))
       },3000)
     } else {
+    new Audio(gold).play()
 
       setPlayerData(prevData => ({
         ...prevData,

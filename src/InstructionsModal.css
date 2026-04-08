@@ -1,0 +1,419 @@
+.App.flying::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: 95vw 94vh 0 0 rgb(255, 255, 255), 95vw 194vh 0 0 rgb(255, 255, 255), 84vw 20vh 0 0 rgba(255, 255, 255, 0.63), 84vw 120vh 0 0 rgba(255, 255, 255, 0.63), 51vw 64vh 0 0 rgba(255, 255, 255, 0.77), 51vw 164vh 0 0 rgba(255, 255, 255, 0.77), 61vw 37vh 0 0 rgba(255, 255, 255, 0.93), 61vw 137vh 0 0 rgba(255, 255, 255, 0.93), 45vw 53vh 0 0 rgba(255, 255, 255, 0.99), 45vw 153vh 0 0 rgba(255, 255, 255, 0.99), 1vw 56vh 0 0 rgba(255, 255, 255, 0.68), 1vw 156vh 0 0 rgba(255, 255, 255, 0.68), 28vw 80vh 0 0 rgba(255, 255, 255, 0.63), 28vw 180vh 0 0 rgba(255, 255, 255, 0.63), 100vw 0vh 0 0 rgba(255, 255, 255, 0.89), 100vw 100vh 0 0 rgba(255, 255, 255, 0.89), 41vw 66vh 0 0 rgba(255, 255, 255, 0.87), 41vw 166vh 0 0 rgba(255, 255, 255, 0.87), 46vw 80vh 0 0 rgba(255, 255, 255, 0.71), 46vw 180vh 0 0 rgba(255, 255, 255, 0.71), 8vw 16vh 0 0 rgba(255, 255, 255, 0.9), 8vw 116vh 0 0 rgba(255, 255, 255, 0.9), 34vw 71vh 0 0 rgba(255, 255, 255, 0.75), 34vw 171vh 0 0 rgba(255, 255, 255, 0.75), 67vw 92vh 0 0 rgba(255, 255, 255, 0.85), 67vw 192vh 0 0 rgba(255, 255, 255, 0.85), 9vw 91vh 0 0 rgba(255, 255, 255, 0.75), 9vw 191vh 0 0 rgba(255, 255, 255, 0.75), 87vw 31vh 0 0 rgba(255, 255, 255, 0.66), 87vw 131vh 0 0 rgba(255, 255, 255, 0.66), 26vw 95vh 0 0 rgba(255, 255, 255, 0.93), 26vw 195vh 0 0 rgba(255, 255, 255, 0.93), 99vw 83vh 0 0 rgba(255, 255, 255, 0.83), 99vw 183vh 0 0 rgba(255, 255, 255, 0.83), 46vw 40vh 0 0 rgba(255, 255, 255, 0.77), 46vw 140vh 0 0 rgba(255, 255, 255, 0.77), 99vw 35vh 0 0 rgba(255, 255, 255, 0.68), 99vw 135vh 0 0 rgba(255, 255, 255, 0.68), 0vw 10vh 0 0 rgba(255, 255, 255, 0.65), 0vw 110vh 0 0 rgba(255, 255, 255, 0.65), 65vw 68vh 0 0 rgba(255, 255, 255, 0.82), 65vw 168vh 0 0 rgba(255, 255, 255, 0.82), 3vw 67vh 0 0 rgba(255, 255, 255, 0.81), 3vw 167vh 0 0 rgba(255, 255, 255, 0.81), 98vw 23vh 0 0 rgba(255, 255, 255, 0.72), 98vw 123vh 0 0 rgba(255, 255, 255, 0.72), 54vw 4vh 0 0 rgba(255, 255, 255, 0.94), 54vw 104vh 0 0 rgba(255, 255, 255, 0.94), 64vw 86vh 0 0 rgba(255, 255, 255, 0.68), 64vw 186vh 0 0 rgba(255, 255, 255, 0.68), 15vw 89vh 0 0 rgba(255, 255, 255, 0.74), 15vw 189vh 0 0 rgba(255, 255, 255, 0.74), 26vw 17vh 0 0 rgba(255, 255, 255, 0.82), 26vw 117vh 0 0 rgba(255, 255, 255, 0.82), 65vw 16vh 0 0 rgba(255, 255, 255, 0.81), 65vw 116vh 0 0 rgba(255, 255, 255, 0.81), 90vw 21vh 0 0 rgba(255, 255, 255, 0.72), 90vw 121vh 0 0 rgba(255, 255, 255, 0.72), 28vw 56vh 0 0 rgba(255, 255, 255, 0.66), 28vw 156vh 0 0 rgba(255, 255, 255, 0.66), 23vw 37vh 0 0 rgba(255, 255, 255, 0.78), 23vw 137vh 0 0 rgba(255, 255, 255, 0.78), 89vw 4vh 0 0 rgba(255, 255, 255, 0.92), 89vw 104vh 0 0 rgba(255, 255, 255, 0.92), 49vw 28vh 0 0 rgba(255, 255, 255, 0.75), 49vw 128vh 0 0 rgba(255, 255, 255, 0.75), 43vw 24vh 0 0 rgba(255, 255, 255, 0.76), 43vw 124vh 0 0 rgba(255, 255, 255, 0.76), 15vw 97vh 0 0 rgba(255, 255, 255, 0.79), 15vw 197vh 0 0 rgba(255, 255, 255, 0.79), 33vw 22vh 0 0 rgba(255, 255, 255, 0.65), 33vw 122vh 0 0 rgba(255, 255, 255, 0.65), 41vw 58vh 0 0 rgba(255, 255, 255, 0.83), 41vw 158vh 0 0 rgba(255, 255, 255, 0.83), 66vw 78vh 0 0 rgba(255, 255, 255, 0.8), 66vw 178vh 0 0 rgba(255, 255, 255, 0.8), 36vw 12vh 0 0 rgba(255, 255, 255, 0.86), 36vw 112vh 0 0 rgba(255, 255, 255, 0.86), 37vw 78vh 0 0 rgba(255, 255, 255, 0.62), 37vw 178vh 0 0 rgba(255, 255, 255, 0.62), 70vw 14vh 0 0 rgba(255, 255, 255, 0.87), 70vw 114vh 0 0 rgba(255, 255, 255, 0.87), 86vw 14vh 0 0 rgba(255, 255, 255, 0.69), 86vw 114vh 0 0 rgba(255, 255, 255, 0.69), 85vw 26vh 0 0 rgba(255, 255, 255, 0.87), 85vw 126vh 0 0 rgba(255, 255, 255, 0.87), 75vw 29vh 0 0 rgba(255, 255, 255, 0.66), 75vw 129vh 0 0 rgba(255, 255, 255, 0.66), 83vw 29vh 0 0 rgba(255, 255, 255, 0.76), 83vw 129vh 0 0 rgba(255, 255, 255, 0.76), 45vw 27vh 0 0 rgba(255, 255, 255, 0.78), 45vw 127vh 0 0 rgba(255, 255, 255, 0.78), 4vw 57vh 0 0 rgba(255, 255, 255, 0.69), 4vw 157vh 0 0 rgba(255, 255, 255, 0.69), 28vw 2vh 0 0 rgba(255, 255, 255, 0.98), 28vw 102vh 0 0 rgba(255, 255, 255, 0.98), 54vw 61vh 0 0 rgba(255, 255, 255, 0.65), 54vw 161vh 0 0 rgba(255, 255, 255, 0.65), 94vw 90vh 0 0 rgba(255, 255, 255, 0.98), 94vw 190vh 0 0 rgba(255, 255, 255, 0.98);
+  animation: stars-fall 2s linear infinite;
+}
+
+.App::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: 95vw 94vh 0 0 rgb(255, 255, 255), 95vw 194vh 0 0 rgb(255, 255, 255), 84vw 20vh 0 0 rgba(255, 255, 255, 0.63), 84vw 120vh 0 0 rgba(255, 255, 255, 0.63), 51vw 64vh 0 0 rgba(255, 255, 255, 0.77), 51vw 164vh 0 0 rgba(255, 255, 255, 0.77), 61vw 37vh 0 0 rgba(255, 255, 255, 0.93), 61vw 137vh 0 0 rgba(255, 255, 255, 0.93), 45vw 53vh 0 0 rgba(255, 255, 255, 0.99), 45vw 153vh 0 0 rgba(255, 255, 255, 0.99), 1vw 56vh 0 0 rgba(255, 255, 255, 0.68), 1vw 156vh 0 0 rgba(255, 255, 255, 0.68), 28vw 80vh 0 0 rgba(255, 255, 255, 0.63), 28vw 180vh 0 0 rgba(255, 255, 255, 0.63), 100vw 0vh 0 0 rgba(255, 255, 255, 0.89), 100vw 100vh 0 0 rgba(255, 255, 255, 0.89), 41vw 66vh 0 0 rgba(255, 255, 255, 0.87), 41vw 166vh 0 0 rgba(255, 255, 255, 0.87), 46vw 80vh 0 0 rgba(255, 255, 255, 0.71), 46vw 180vh 0 0 rgba(255, 255, 255, 0.71), 8vw 16vh 0 0 rgba(255, 255, 255, 0.9), 8vw 116vh 0 0 rgba(255, 255, 255, 0.9), 34vw 71vh 0 0 rgba(255, 255, 255, 0.75), 34vw 171vh 0 0 rgba(255, 255, 255, 0.75), 67vw 92vh 0 0 rgba(255, 255, 255, 0.85), 67vw 192vh 0 0 rgba(255, 255, 255, 0.85), 9vw 91vh 0 0 rgba(255, 255, 255, 0.75), 9vw 191vh 0 0 rgba(255, 255, 255, 0.75), 87vw 31vh 0 0 rgba(255, 255, 255, 0.66), 87vw 131vh 0 0 rgba(255, 255, 255, 0.66), 26vw 95vh 0 0 rgba(255, 255, 255, 0.93), 26vw 195vh 0 0 rgba(255, 255, 255, 0.93), 99vw 83vh 0 0 rgba(255, 255, 255, 0.83), 99vw 183vh 0 0 rgba(255, 255, 255, 0.83), 46vw 40vh 0 0 rgba(255, 255, 255, 0.77), 46vw 140vh 0 0 rgba(255, 255, 255, 0.77), 99vw 35vh 0 0 rgba(255, 255, 255, 0.68), 99vw 135vh 0 0 rgba(255, 255, 255, 0.68), 0vw 10vh 0 0 rgba(255, 255, 255, 0.65), 0vw 110vh 0 0 rgba(255, 255, 255, 0.65), 65vw 68vh 0 0 rgba(255, 255, 255, 0.82), 65vw 168vh 0 0 rgba(255, 255, 255, 0.82), 3vw 67vh 0 0 rgba(255, 255, 255, 0.81), 3vw 167vh 0 0 rgba(255, 255, 255, 0.81), 98vw 23vh 0 0 rgba(255, 255, 255, 0.72), 98vw 123vh 0 0 rgba(255, 255, 255, 0.72), 54vw 4vh 0 0 rgba(255, 255, 255, 0.94), 54vw 104vh 0 0 rgba(255, 255, 255, 0.94), 64vw 86vh 0 0 rgba(255, 255, 255, 0.68), 64vw 186vh 0 0 rgba(255, 255, 255, 0.68), 15vw 89vh 0 0 rgba(255, 255, 255, 0.74), 15vw 189vh 0 0 rgba(255, 255, 255, 0.74), 26vw 17vh 0 0 rgba(255, 255, 255, 0.82), 26vw 117vh 0 0 rgba(255, 255, 255, 0.82), 65vw 16vh 0 0 rgba(255, 255, 255, 0.81), 65vw 116vh 0 0 rgba(255, 255, 255, 0.81), 90vw 21vh 0 0 rgba(255, 255, 255, 0.72), 90vw 121vh 0 0 rgba(255, 255, 255, 0.72), 28vw 56vh 0 0 rgba(255, 255, 255, 0.66), 28vw 156vh 0 0 rgba(255, 255, 255, 0.66), 23vw 37vh 0 0 rgba(255, 255, 255, 0.78), 23vw 137vh 0 0 rgba(255, 255, 255, 0.78), 89vw 4vh 0 0 rgba(255, 255, 255, 0.92), 89vw 104vh 0 0 rgba(255, 255, 255, 0.92), 49vw 28vh 0 0 rgba(255, 255, 255, 0.75), 49vw 128vh 0 0 rgba(255, 255, 255, 0.75), 43vw 24vh 0 0 rgba(255, 255, 255, 0.76), 43vw 124vh 0 0 rgba(255, 255, 255, 0.76), 15vw 97vh 0 0 rgba(255, 255, 255, 0.79), 15vw 197vh 0 0 rgba(255, 255, 255, 0.79), 33vw 22vh 0 0 rgba(255, 255, 255, 0.65), 33vw 122vh 0 0 rgba(255, 255, 255, 0.65), 41vw 58vh 0 0 rgba(255, 255, 255, 0.83), 41vw 158vh 0 0 rgba(255, 255, 255, 0.83), 66vw 78vh 0 0 rgba(255, 255, 255, 0.8), 66vw 178vh 0 0 rgba(255, 255, 255, 0.8), 36vw 12vh 0 0 rgba(255, 255, 255, 0.86), 36vw 112vh 0 0 rgba(255, 255, 255, 0.86), 37vw 78vh 0 0 rgba(255, 255, 255, 0.62), 37vw 178vh 0 0 rgba(255, 255, 255, 0.62), 70vw 14vh 0 0 rgba(255, 255, 255, 0.87), 70vw 114vh 0 0 rgba(255, 255, 255, 0.87), 86vw 14vh 0 0 rgba(255, 255, 255, 0.69), 86vw 114vh 0 0 rgba(255, 255, 255, 0.69), 85vw 26vh 0 0 rgba(255, 255, 255, 0.87), 85vw 126vh 0 0 rgba(255, 255, 255, 0.87), 75vw 29vh 0 0 rgba(255, 255, 255, 0.66), 75vw 129vh 0 0 rgba(255, 255, 255, 0.66), 83vw 29vh 0 0 rgba(255, 255, 255, 0.76), 83vw 129vh 0 0 rgba(255, 255, 255, 0.76), 45vw 27vh 0 0 rgba(255, 255, 255, 0.78), 45vw 127vh 0 0 rgba(255, 255, 255, 0.78), 4vw 57vh 0 0 rgba(255, 255, 255, 0.69), 4vw 157vh 0 0 rgba(255, 255, 255, 0.69), 28vw 2vh 0 0 rgba(255, 255, 255, 0.98), 28vw 102vh 0 0 rgba(255, 255, 255, 0.98), 54vw 61vh 0 0 rgba(255, 255, 255, 0.65), 54vw 161vh 0 0 rgba(255, 255, 255, 0.65), 94vw 90vh 0 0 rgba(255, 255, 255, 0.98), 94vw 190vh 0 0 rgba(255, 255, 255, 0.98);
+  animation: stars-fall 10s linear infinite;
+}
+.App {
+  position: relative;
+  overflow: hidden;
+  background-image: url("../public/space-background.png");
+  margin: 0px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.App .info-icon {
+  color: white;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: 1px solid white;
+  border-radius: 100%;
+  padding: 5px;
+  cursor: pointer;
+}
+.App .instructions-icon {
+  color: white;
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  border: 1px solid white;
+  border-radius: 100%;
+  padding: 5px;
+  cursor: pointer;
+}
+.App .add-ship-icon {
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  border: 1px solid white;
+  border-radius: 100%;
+  padding: 5px;
+}
+.App .event-icon {
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 50%;
+}
+.App .fa-clover {
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  color: white;
+}
+.App .info-modal, .App .fleet-modal, .App .create-ship-modal, .App .solar-system-modal, .App .event-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 2;
+  width: 70%;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.App .info-modal .modal-inputs-wrapper, .App .fleet-modal .modal-inputs-wrapper, .App .create-ship-modal .modal-inputs-wrapper, .App .solar-system-modal .modal-inputs-wrapper, .App .event-modal .modal-inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 5px;
+}
+.App .info-modal .modal-inputs-wrapper .modal-inputs-group, .App .fleet-modal .modal-inputs-wrapper .modal-inputs-group, .App .create-ship-modal .modal-inputs-wrapper .modal-inputs-group, .App .solar-system-modal .modal-inputs-wrapper .modal-inputs-group, .App .event-modal .modal-inputs-wrapper .modal-inputs-group {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+}
+.App .info-modal .modal-inputs-wrapper .modal-inputs-group input,
+.App .info-modal .modal-inputs-wrapper .modal-inputs-group select, .App .fleet-modal .modal-inputs-wrapper .modal-inputs-group input,
+.App .fleet-modal .modal-inputs-wrapper .modal-inputs-group select, .App .create-ship-modal .modal-inputs-wrapper .modal-inputs-group input,
+.App .create-ship-modal .modal-inputs-wrapper .modal-inputs-group select, .App .solar-system-modal .modal-inputs-wrapper .modal-inputs-group input,
+.App .solar-system-modal .modal-inputs-wrapper .modal-inputs-group select, .App .event-modal .modal-inputs-wrapper .modal-inputs-group input,
+.App .event-modal .modal-inputs-wrapper .modal-inputs-group select {
+  height: 2em;
+}
+.App .info-modal button, .App .info-modal .fa-xmark, .App .fleet-modal button, .App .fleet-modal .fa-xmark, .App .create-ship-modal button, .App .create-ship-modal .fa-xmark, .App .solar-system-modal button, .App .solar-system-modal .fa-xmark, .App .event-modal button, .App .event-modal .fa-xmark {
+  background: rgba(255, 255, 255, 0.5);
+  color: black;
+  box-shadow: none;
+  border: none;
+  border-radius: 10px;
+  width: 30%;
+  margin: 0px 10px;
+  padding: 10px;
+}
+.App .info-modal .modal-error-div, .App .fleet-modal .modal-error-div, .App .create-ship-modal .modal-error-div, .App .solar-system-modal .modal-error-div, .App .event-modal .modal-error-div {
+  color: red;
+  margin-top: 10px;
+}
+.App .fleet-modal .button-div {
+  display: flex;
+  width: 90%;
+  justify-content: space-around;
+}
+.App .fleet-modal .button-div button {
+  width: 45%;
+}
+.App .fleet-modal .ships-list {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 10px;
+  width: 90%;
+  border: 1px solid white;
+  margin-bottom: 10px;
+}
+.App .fleet-modal .ships-list .ship-info-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.App .fleet-modal .ships-list .ship-info {
+  display: grid;
+  padding: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  -moz-column-gap: 1px;
+       column-gap: 1px;
+}
+.App .fleet-modal .ships-list .ship-info button {
+  width: 90%;
+  margin: 0px;
+}
+.App .create-ship-modal .button-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.App .solar-system-modal {
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.App .solar-system-modal .fa-xmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: auto;
+}
+.App .solar-system-modal .canvas-div {
+  width: 90%;
+}
+.App .solar-system-modal canvas {
+  width: 100%;
+  border: 1px solid white;
+  background: url("./assets/solar-systems/Universe2.png");
+}
+.App .solar-system-modal .solar-system-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+.App .info-modal .fa-xmark {
+  color: black;
+  width: 10%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.App .info-modal button {
+  margin: 5px;
+}
+.App .event-modal .fa-xmark {
+  color: black;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 10px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+}
+.App .event-modal .event-input-display, .App .event-modal .event-result-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.App .event-modal .event-input-display .event-choice-row button, .App .event-modal .event-result-display .event-choice-row button {
+  flex: 1;
+}
+.App .event-modal .event-input-display .event-choice-row, .App .event-modal .event-result-display .event-choice-row {
+  display: flex;
+  justify-content: space-around;
+}
+.App .event-modal .fa-arrow-left {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  border-radius: 10% 10%;
+  height: 10px;
+  width: 10px;
+}
+.App .event-modal .space {
+  animation: float 4s infinite;
+}
+.App .event-modal .faction {
+  animation: float 4s infinite;
+}
+.App .event-modal .events-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90%;
+}
+.App .event-modal .events-list .event-item {
+  display: contents;
+  padding: 5px;
+  margin: 5px;
+}
+.App .event-modal .events-list .event-item > * {
+  margin: 0 auto;
+  padding: 5px;
+}
+.App .credits-display {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+}
+.App .ship-animation {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 50px;
+}
+.App .ship-animation .ship {
+  animation: hover 2s steps(4) infinite;
+  height: 100px;
+}
+.App .ship-animation .ship.fly-out {
+  animation: flyout 3s forwards;
+}
+.App .ship-animation .ship.fly-in {
+  animation: flyin 3s forwards cubic-bezier(0, 0.7, 0.34, 1.75);
+}
+.App .display {
+  position: relative;
+  z-index: 1;
+  width: 75%;
+  color: white;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05); /* Semi-transparent background */
+  backdrop-filter: blur(1px); /* The key blurring effect */
+  -webkit-backdrop-filter: blur(10px); /* Vendor prefix for compatibility */
+  border-radius: 10px; /* Rounded corners for a softer look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.App .display .row-one {
+  display: flex;
+  justify-content: space-around;
+}
+.App .display .row-two {
+  display: flex;
+  justify-content: center;
+}
+.App .display .resource-display {
+  padding: 5px;
+}
+.App .display .resource-display button {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+  border: none;
+  border-radius: 10% 10%;
+}
+.App .display .resource-display {
+  position: relative;
+}
+.App .display .resource-display .resource-name {
+  margin-left: 10%;
+}
+.App .display .resource-display .mining-level {
+  right: 10%;
+  display: inline;
+  position: absolute;
+}
+.App .display .resource-display .mining-level button {
+  margin-left: 10px;
+}
+.App .display .button-row {
+  display: flex;
+  justify-content: center;
+}
+.App .display .button-row button {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+  border: none;
+  border-radius: 10px;
+  width: 30%;
+  margin: 0px 10px;
+}
+.App button {
+  position: relative;
+  z-index: 1;
+  width: 50px;
+}
+
+.message-display {
+  width: 75%;
+  margin-top: 10px;
+  color: white;
+  height: 20px;
+}
+
+@keyframes hover {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes stars-fall {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(0vh);
+  }
+}
+@keyframes flyout {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateY(-100vh);
+  }
+}
+@keyframes flyin {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.instructions-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 2;
+  width: 70%;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.instructions-modal .modal-inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 5px;
+}
+.instructions-modal .modal-inputs-wrapper .modal-inputs-group {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+}
+.instructions-modal .modal-inputs-wrapper .modal-inputs-group input,
+.instructions-modal .modal-inputs-wrapper .modal-inputs-group select {
+  height: 2em;
+}/*# sourceMappingURL=InstructionsModal.css.map */

@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { secondsPerCredit, shipClasses, createNewShip } from "./config"
+import "./InstructionsModal.css"
+
 
 function InstructionsModal(props){
     const [shipName, setShipName] = useState(props.playerData.shipName || '')
@@ -35,7 +37,7 @@ function InstructionsModal(props){
   }
 
   return(
-    <div className="info-modal">
+    <div className="instructions-modal">
         <p className="description">
             Idle Game is designed to reward you for doing things that aren't as inherently rewarding as they ought to be.  You can give your ship a name, describe what activity it is for.  Then select a class for your ship. The utility class is for daily activities that are shorter in duration.  These can be things like chores, self-care routines etc.  The research class is for growth activities that in involve larger time commitments.  This would be things like skill development and practice, reading, working etc.  The vanguard class is for difficult or emotionally challenging tasks or for things you've been avoiding.
         </p>

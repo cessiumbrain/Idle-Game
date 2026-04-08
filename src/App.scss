@@ -44,6 +44,24 @@ $star-shadows: ();
   }
 }
 
+@mixin modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 2;
+  width: 70%;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
 .App.flying {
   @include flying_starfield;
 }
@@ -121,23 +139,7 @@ $star-shadows: ();
       align-items: center;
       color: white;
   
-      .modal-inputs-wrapper {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: 5px;
-  
-        .modal-inputs-group {
-          display: grid;
-          grid-template-columns: 0.5fr 1fr;
-  
-          input,
-          select {
-            height: 2em;
-
-          }
-        }
-      }
+      
       //button styles
       button, .fa-xmark {
         background: rgba(255, 255, 255, 0.5);

@@ -1,0 +1,23 @@
+@use './App.scss' as app;
+
+.instructions-modal {
+    @include app.modal;
+    .modal-inputs-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 5px;
+  
+        .modal-inputs-group {
+          display: grid;
+          grid-template-columns: 0.5fr 1fr;
+  
+          input,
+          select {
+            height: 2em;
+
+          }
+        }
+      }
+}
+

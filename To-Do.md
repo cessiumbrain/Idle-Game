@@ -1,1 +1,4 @@
-- all events are finished - wire up events to game loop
+- have the full instructions and then open the create new ship modal and don't allow click off if playerData.fleet.length === 0
+- expand instructions
+- put events count in event modal and make flash on new events
+- 
